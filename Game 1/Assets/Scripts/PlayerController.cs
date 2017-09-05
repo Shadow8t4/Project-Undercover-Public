@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0))
         {
-            explode.Play();
+            //explode.Play;
             Debug.Log("Explosion at: " + Input.mousePosition);
         }
                 	
