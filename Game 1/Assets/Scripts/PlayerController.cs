@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        explode = (AnimationClip)Instantiate(explosion, Camera.main.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
+        // explode = (AnimationClip)Instantiate(explosion, Camera.main.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
     }
 	
 	// Update is called once per frame
@@ -25,8 +25,7 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0))
         {
-            //explode.Play;
-            Debug.Log("Explosion at: " + Input.mousePosition);
+
         }
                 	
 	}
