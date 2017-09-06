@@ -6,25 +6,24 @@ public class CameraController : MonoBehaviour {
 
 	public GameObject player;
 
-	private int offset;
+	private Vector3 offset;
 	private Vector3 newPosition;
 
-	private int minX, maxX, minY, maxY;
+	private float minX, maxX, minY, maxY;
 
 	void Start () {
-		offset = transform.position.y - player.transform.position.y;
-		minX = 0;
-		maxX = 0;
-		minY = 0;
-		maxY = 18;
+		offset = transform.position - player.transform.position;
+
+		minX = 0.0f;
+		maxX = 0.0f;
+		minY = 0.0f;
+		maxY = 18.0f;
 	}
 
 	void LateUpdate () {
 		newPosition = player.transform.position + offset;
 
-		//if(newPosition.x >= minX && newPosition.x <= maxX && newPosition.y >= minY && newPosition.y <= maxY)
 		if(newPosition.x >= minX && newPosition.x <= maxX && newPosition.y >= minY && newPosition.y <= maxY)
-			
 			transform.position = newPosition;
 		
 	}
