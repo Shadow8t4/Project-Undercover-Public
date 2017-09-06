@@ -7,12 +7,11 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
 	public float jumpPower;
-    public AnimationClip explosion;
-    private AnimationClip explode;
+    public GameObject rocketPrefab;
 
 	// Use this for initialization
 	void Start () {
-        // explode = (AnimationClip)Instantiate(explosion, Camera.main.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
+    
     }
 	
 	// Update is called once per frame
@@ -25,8 +24,9 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0))
         {
-
-        }
-                	
+            Vector2 rocketPos = transform.position;
+            GameObject rocket = Instantiate(rocketPrefab, rocketPos, Quaternion.identity);
+            rocket.GetComponent<RocketController>().player = this;
+        }            	
 	}
 }

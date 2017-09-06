@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour {
 
-    private Animator anim;
+    public PlayerController player;
+    private float MAX_PLAYER_DIST = 3.0f;
 
-	// Use this for initialization
 	void Start () {
-        anim = GetComponent<Animator>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        Debug.Log(anim.GetCurrentAnimatorStateInfo(0).tagHash);
-        //if (anim.GetCurrentAnimatorStateInfo(0).tagHash == 0)
-        //    Destroy(gameObject);
+        Vector3 playerPos = player.transform.position;
+        float dist = (playerPos - transform.position).magnitude;
+        if (dist < MAX_PLAYER_DIST)
+        {
+            Rigidbody2D playerBody = player.GetComponent<Rigidbody2D>();
+            Vector2 force = (playerPos - transform.position).normalized * (MAX_PLAYER_DIST - dist) * 15.0f;
+            playerBody.AddForce(force, ForceMode2D.Impulse);
+        }
 	}
 }
