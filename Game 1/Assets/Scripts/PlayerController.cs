@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //  Simple script for a test I need to do
 
@@ -9,9 +10,11 @@ public class PlayerController : MonoBehaviour {
 	public float jumpPower;
     public GameObject rocketPrefab;
 
+	public Text winText;
+
 	// Use this for initialization
 	void Start () {
-    
+
     }
 	
 	// Update is called once per frame
@@ -28,5 +31,13 @@ public class PlayerController : MonoBehaviour {
             GameObject rocket = Instantiate(rocketPrefab, rocketPos, Quaternion.identity);
             rocket.GetComponent<RocketController>().player = this;
         }            	
+	}
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		//Check the provided Collider2D parameter other to see if it is tagged "PickUp", if it is...
+		if (other.gameObject.CompareTag ("Finish Line")) {
+			winText.text = "You Win!";
+		}
 	}
 }
