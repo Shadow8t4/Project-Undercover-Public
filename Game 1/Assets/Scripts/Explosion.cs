@@ -15,6 +15,7 @@ public class Explosion : MonoBehaviour {
             Rigidbody2D playerBody = player.GetComponent<Rigidbody2D>();
             Vector2 force = (playerPos - transform.position).normalized * (MAX_PLAYER_DIST - dist) * 15.0f;
             playerBody.AddForce(force, ForceMode2D.Impulse);
+            Debug.Log(force);
         }
 	}
 }
