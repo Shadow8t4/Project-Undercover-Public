@@ -23,8 +23,13 @@ public class CameraController : MonoBehaviour {
 	void LateUpdate () {
 		newPosition = player.transform.position + offset;
 
-		if(newPosition.x >= minX && newPosition.x <= maxX && newPosition.y >= minY && newPosition.y <= maxY)
-			transform.position = newPosition;
+		transform.position = new Vector3
+			(
+				Mathf.Clamp (newPosition.x, minX, maxX),
+				//transform.position.x,
+				Mathf.Clamp (newPosition.y, minY, maxY),
+				transform.position.z
+			);
 		
 	}
 }
