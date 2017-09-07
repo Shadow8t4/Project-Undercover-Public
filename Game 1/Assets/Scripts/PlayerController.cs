@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour {
 
 	public float jumpPower;
     public GameObject rocketPrefab;
-    private float reloadTime = 0.5f;
+    private float reloadTime = 0.25f;
     private bool reloading = false;
 	
 	// Update is called once per frame
