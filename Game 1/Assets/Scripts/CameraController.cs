@@ -14,8 +14,8 @@ public class CameraController : MonoBehaviour {
 	void Start () {
 		offset = transform.position - player.transform.position;
 
-		minX = 0.0f;
-		maxX = 0.0f;
+		minX = -2.0f;
+		maxX = 2.0f;
 		minY = 0.0f;
 		maxY = 18.0f;
 	}
