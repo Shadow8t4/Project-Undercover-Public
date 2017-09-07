@@ -6,10 +6,12 @@ public class RocketController : MonoBehaviour {
 
     public PlayerController player;
     public GameObject explosionPrefab;
-    private float ROCKET_SPEED = 20.0f;
+    private float ROCKET_SPEED = 10.0f;
+    private float ROCKET_LIFETIME = 5.0f;
 
     private void Start()
     {
+        StartCoroutine(DestroyAfterTime());
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 playerPos = player.transform.position;
         Vector2 rocketDir = (mousePos - playerPos).normalized;
@@ -24,15 +26,19 @@ public class RocketController : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            Debug.Log("Player Collision Detected");
             return;
-        }
         
-        Vector3 explosionPos = transform.position;
+        Vector3 explosionPos = collision.contacts[0].point;
         explosionPos.z = 0;
         GameObject explosion = Instantiate(explosionPrefab, explosionPos, Quaternion.identity);
         explosion.GetComponent<Explosion>().player = player;
         Destroy(gameObject);
+    }
+
+    IEnumerator DestroyAfterTime()
+    {
+        yield return new WaitForSeconds(ROCKET_LIFETIME);
+        Destroy(gameObject);
+        yield return null;
     }
 }

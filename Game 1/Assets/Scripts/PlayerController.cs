@@ -10,27 +10,25 @@ public class PlayerController : MonoBehaviour {
 
 	public float jumpPower;
     public GameObject rocketPrefab;
-
-	public Text winText;
-
-	// Use this for initialization
-	void Start () {
-
-    }
+    private float reloadTime = 0.5f;
+    private bool reloading = false;
 	
 	// Update is called once per frame
 	void Update () {
 
-        //  Basic jumping
+        /*//  Basic jumping
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, jumpPower);
-		}
+		}*/
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !reloading)
         {
+            reloading = true;
+            StartCoroutine("Reload");
             Vector2 rocketPos = transform.position;
             GameObject rocket = Instantiate(rocketPrefab, rocketPos, Quaternion.identity);
             rocket.GetComponent<RocketController>().player = this;
+            Physics2D.IgnoreCollision(rocket.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         }            	
 	}
 
@@ -38,12 +36,19 @@ public class PlayerController : MonoBehaviour {
 	{
 		//Check the provided Collider2D parameter other to see if it is tagged "PickUp", if it is...
 		if (other.gameObject.CompareTag ("Finish Line")) {
-			winText.text = "You Win!";
-		}
+            LevelController.GetController().WinLevel();
+        }
 		
 		// Deathbox and saws restart level
         if (other.gameObject.CompareTag ("Deathbox")) {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            LevelController.GetController().ResetLevel();
         }
 	}
+
+    private IEnumerator Reload()
+    {
+        yield return new WaitForSeconds(reloadTime);
+        reloading = false;
+        yield return null;
+    }
 }
