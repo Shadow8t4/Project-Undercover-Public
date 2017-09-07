@@ -37,6 +37,7 @@ public class LevelController : MonoBehaviour {
     {
         if (wonLevel)
             return;
+        PlayerController.GetController().KillPlayer();
         winText.text = "TRY AGAIN!";
         StartCoroutine(DelayLoadLevel(SceneManager.GetActiveScene().name, 2.0f));
     }
@@ -50,8 +51,10 @@ public class LevelController : MonoBehaviour {
 			GameObject start = GameObject.FindGameObjectWithTag ("Start");
 			player.transform.position = start.transform.position;
 			winText.text = "";
+            PlayerController.GetController().RevivePlayer();
 		} else {
-			SceneManager.LoadScene (levelName);
+            levelController = null;
+            SceneManager.LoadScene (levelName);
 		}
         yield return null;
     }
