@@ -44,7 +44,15 @@ public class LevelController : MonoBehaviour {
     public IEnumerator DelayLoadLevel(string levelName, float delay)
     {
         yield return new WaitForSeconds(delay);
-        SceneManager.LoadScene(levelName);
+		if (SceneManager.GetActiveScene ().name == levelName) {
+			// soft restart - just reset location
+			GameObject player = GameObject.FindGameObjectWithTag ("Player");
+			GameObject start = GameObject.FindGameObjectWithTag ("Start");
+			player.transform.position = start.transform.position;
+			winText.text = "";
+		} else {
+			SceneManager.LoadScene (levelName);
+		}
         yield return null;
     }
 }
