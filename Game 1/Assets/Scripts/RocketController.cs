@@ -6,7 +6,7 @@ public class RocketController : MonoBehaviour {
 
     public PlayerController player;
     public GameObject explosionPrefab;
-    private float ROCKET_SPEED = 10.0f;
+    private float ROCKET_SPEED = 12.0f;
     private float ROCKET_LIFETIME = 5.0f;
 
     private void Start()
