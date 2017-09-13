@@ -10,7 +10,7 @@ public class SimpleNPCBehavior : MonoBehaviour
 
 	void Start() 
 	{
-		target.Set(0.0f, 0.5f, 0.0f);
+		target.Set (4.0f - (8.0f * Random.value), 0.5f, 4.0f - (8.0f * Random.value));
 		rigi = GetComponent<Rigidbody>();
 	}
 

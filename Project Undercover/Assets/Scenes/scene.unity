@@ -299,6 +299,11 @@ Prefab:
       propertyPath: m_Name
       value: NPC (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 54771552521138126, guid: b25e969032ebb1f4089308db11ee93b1,
+        type: 2}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b25e969032ebb1f4089308db11ee93b1, type: 2}
   m_IsPrefabParent: 0
@@ -399,7 +404,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &966385057
@@ -413,6 +418,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c9e5b8e36b3b0747811ece9fa00437a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particle: {fileID: 1057615597006810, guid: b25e969032ebb1f4089308db11ee93b1, type: 2}
+  TransitionSpeed: 1
 --- !u!4 &984138133 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4550573785341638, guid: b25e969032ebb1f4089308db11ee93b1,
