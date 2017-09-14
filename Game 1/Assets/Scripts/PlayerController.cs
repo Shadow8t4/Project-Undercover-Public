@@ -12,10 +12,44 @@ public class PlayerController : MonoBehaviour {
     public GameObject rocketPrefab;
     private float reloadTime = 0.25f;
     private bool reloading = false;
-	
-	// Update is called once per frame
-	void Update () {
+    private static PlayerController controller;
+    private bool alive = true;
 
+    private void Start()
+    {
+        if (controller)
+        {
+            Debug.LogError("More than one player controller in the scene! Deleting this controller.");
+            Destroy(this);
+        }
+        controller = this;
+        alive = true;
+    }
+
+    public static PlayerController GetController()
+    {
+        if (!controller)
+        {
+            Debug.LogError("No player controller currently in the scene.");
+            return null;
+        }
+        return controller;
+    }
+
+    public void KillPlayer()
+    {
+        alive = false;
+    }
+
+    public void RevivePlayer()
+    {
+        alive = true;
+    }
+
+    // Update is called once per frame
+    void Update () {
+        if (!alive)
+            return;
         /*//  Basic jumping
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, jumpPower);

@@ -6,7 +6,7 @@ public class Explosion : MonoBehaviour {
 
     public PlayerController player;
     private float MAX_PLAYER_DIST = 3.0f;
-    private float EXPLOSION_FORCE = 10.0f;
+    private float EXPLOSION_FORCE = 15.0f;
 
 	void Start () {
         Vector3 playerPos = player.transform.position;
