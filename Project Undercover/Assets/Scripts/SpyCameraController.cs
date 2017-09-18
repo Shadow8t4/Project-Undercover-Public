@@ -6,10 +6,9 @@ public class SpyCameraController : MonoBehaviour {
 
 	private float camSens = 100.0f;
 	private float xRotation;
-	private Vector3 rotation;
 
 	void Start () {
-		rotation = new Vector3(0.0f, 0.0f, 0.0f);	
+		xRotation = 0.0f;	
 	}
 
 	void LateUpdate () {
