@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 	void Start() 
 	{
 		agent = GetComponent<NavMeshAgent> (); 
+		this.GetComponent<Renderer> ().material.color = Random.ColorHSV (0f, 1f, 1f, 1f, 0f, 1f);
 	}
 
 	void Update()

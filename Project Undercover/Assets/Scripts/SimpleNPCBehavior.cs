@@ -4,15 +4,22 @@ using UnityEngine.AI;
 
 public class SimpleNPCBehavior : MonoBehaviour 
 {
-	public float moveSpeed;
 	public int updateTime;
+
 	private Vector3 target;
 	private NavMeshAgent agent;
 
+	enum State {
+		idle,
+		walking,
+		talking
+	};
+
 	void Start() 
 	{
+		this.GetComponent<Renderer> ().material.color = Random.ColorHSV (0f, 1f, 1f, 1f, 0f, 1f);
 		target.Set (4.0f - (8.0f * Random.value), 0.5f, 4.0f - (8.0f * Random.value));
-		agent = GetComponent<NavMeshAgent> (); 
+		agent = GetComponent<NavMeshAgent> ();
 	}
 
 	void Update() 
