@@ -16,7 +16,6 @@ public class Spy : Photon.PunBehaviour {
         if (shakingSpies == null)
             shakingSpies = new HashSet<Spy>();
         agent = GetComponent<NavMeshAgent>();
-        transform.Find("Body").GetComponent<Renderer>().material.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0f, 1f);
         if (!GetComponent<PlayerController>().enabled && PersistantPlayerSettings.character == PersistantPlayerSettings.Character.Spy)
         {
             nameTag.SetActive(true);

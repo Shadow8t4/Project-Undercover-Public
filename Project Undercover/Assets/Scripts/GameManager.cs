@@ -49,19 +49,22 @@ public class GameManager : Photon.PunBehaviour {
         }
         else
         {
+            guardCamera.GetComponent<GuardCamera>().laserSightEnabled = true;
             Vector3 randPos = SimpleNPCBehavior.GetRandomLocation();
             var spy = PhotonNetwork.Instantiate(spyPrefab.name, randPos, Quaternion.identity, 0);
             spy.GetComponent<PlayerController>().enabled = true;
             spy.GetComponent<Spy>().SetColor();
         }
+        /*
         if (PhotonNetwork.isMasterClient)
         {
             for (int i = 0; i < numNCPs; i++)
             {
                 Vector3 randPos = SimpleNPCBehavior.GetRandomLocation();
-                var npc = PhotonNetwork.Instantiate(NCPPrefab.name, randPos, Quaternion.identity, 0);
+                PhotonNetwork.Instantiate(NCPPrefab.name, randPos, Quaternion.identity, 0);
             }
-        }
+        }*/
+
     }
 
     public void CompleteMission()

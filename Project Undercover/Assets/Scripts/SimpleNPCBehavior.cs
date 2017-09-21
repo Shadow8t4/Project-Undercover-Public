@@ -20,7 +20,6 @@ public class SimpleNPCBehavior : Photon.PunBehaviour
             photonView.RPC("TeleportToTarget", PhotonTargets.All, GetRandomLocation());
             photonView.RPC("SetColorRPC", PhotonTargets.All, new Vector3(Random.value, Random.value, Random.value));
         }
-        agent.destination = transform.position;
     }
 
 	void Update() 
@@ -46,7 +45,7 @@ public class SimpleNPCBehavior : Photon.PunBehaviour
 
     public static Vector3 GetRandomLocation()
     {
-        var randTarget = new Vector3(4.0f - (8.0f * Random.value), 0.5f, 4.0f - (8.0f * Random.value));
+        var randTarget = new Vector3(5.0f - (10.0f * Random.value), 1.0f, 5.0f - (10.0f * Random.value));
         NavMeshHit hit;
         if (NavMesh.SamplePosition(randTarget, out hit, 1.0f, NavMesh.AllAreas))
             return hit.position;
@@ -63,7 +62,7 @@ public class SimpleNPCBehavior : Photon.PunBehaviour
     [PunRPC]
     void TeleportToTarget(Vector3 target)
     {
-        transform.position = target;
+        agent.Warp(target);
         agent.destination = target;
     }
 

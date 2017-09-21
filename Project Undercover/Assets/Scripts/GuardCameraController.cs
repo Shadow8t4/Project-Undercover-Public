@@ -47,11 +47,12 @@ public class GuardCameraController : Photon.PunBehaviour {
         SetCameraEnabled(this, false);
     }
 
-    public void SetCameraEnabled(GuardCameraController camera, bool enabled)
+    public void SetCameraEnabled(GuardCameraController gCamera, bool enabled)
     {
-        camera.GetComponent<Camera>().enabled = enabled;
-        camera.GetComponent<AudioListener>().enabled = enabled;
-        camera.enabled = enabled;
+        gCamera.GetComponent<Camera>().enabled = enabled;
+        gCamera.GetComponent<AudioListener>().enabled = enabled;
+        gCamera.enabled = enabled;
+        gCamera.photonView.RPC("SetEnabledRPC", PhotonTargets.Others, enabled);
     }
 
 	void Update () {
@@ -65,12 +66,12 @@ public class GuardCameraController : Photon.PunBehaviour {
 
             if (Physics.Raycast(ray, out hit, 100.0f))
             {
-                if (hit.transform.gameObject.tag == "NPC")
+                if (hit.transform.parent.gameObject.tag == "NPC")
                 {
                     var manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
                     manager.photonView.RPC("ShowSpiesWinScreen", PhotonTargets.All);
                 }
-                else if (hit.transform.gameObject.tag == "Spy")
+                else if (hit.transform.parent.gameObject.tag == "Spy")
                 {
                     var manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
                     manager.photonView.RPC("ShowGuardsWinScreen", PhotonTargets.All);
