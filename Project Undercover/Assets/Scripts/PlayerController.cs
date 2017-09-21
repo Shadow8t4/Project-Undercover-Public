@@ -1,48 +1,44 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-	// Testing
 	public GameObject particle;
-	// Player as a nav mesh agent
-	private NavMeshAgent agent;
+    public GameObject cameraRigPrefab;
+    private GameObject cameraRig;
+    public Transform cameraTarget;
+    private Vector3 target;
+    private Spy spy;
+    private int mask;
 
 	void Start() 
 	{
-		agent = GetComponent<NavMeshAgent> (); 
-		this.GetComponent<Renderer> ().material.color = Random.ColorHSV (0f, 1f, 1f, 1f, 0f, 1f);
+        int layerMask = LayerMask.NameToLayer("Floor");
+        mask = 1 << layerMask;
+        spy = GetComponent<Spy>();
+        cameraRig = Instantiate(cameraRigPrefab, Vector3.zero, Quaternion.identity);
+        cameraRig.GetComponentInChildren<ThirdPersonCameraController>().SetTarget(cameraTarget);
 	}
 
 	void Update()
 	{
-		/* // WASD or Arrow keys movement
-		var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
-		var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
-
-		transform.Rotate(0, x, 0);
-		transform.Translate(0, 0, z);
-		*/
-
 		RaycastHit hit;
-		// Testing
 		if (Input.GetButtonDown("Fire1")) {
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out hit)) {
+
+			if (Physics.Raycast(ray, out hit, 100.0f, mask)) {
 				Vector3 wantedPos = hit.point;
-				wantedPos.y = 0.5f;
-				Instantiate (particle, wantedPos, transform.rotation);
+                Instantiate(particle, wantedPos, Quaternion.Euler(-90,0,0));
+                wantedPos.y = 0.5f;
+                spy.UpdateTarget(wantedPos);
 			}
 		}
-		// Walking
-		else if (Input.GetButtonDown("Fire2")) {
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out hit)) {
-				Vector3 wantedPos = hit.point;
-				wantedPos.y = 0.5f;
-				agent.destination = wantedPos;
-			}
-		}
+
+        if (Input.GetKeyDown("space"))
+        {
+            spy.HandShake();
+        }
 	}
+
+    
 }
