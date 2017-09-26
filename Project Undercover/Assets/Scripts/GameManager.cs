@@ -55,15 +55,16 @@ public class GameManager : Photon.PunBehaviour {
             spy.GetComponent<PlayerController>().enabled = true;
             spy.GetComponent<Spy>().SetColor();
         }
-        /*
+        
         if (PhotonNetwork.isMasterClient)
         {
-            for (int i = 0; i < numNCPs; i++)
+			for (int i = 0; i < numNCPs; i++)
             {
                 Vector3 randPos = SimpleNPCBehavior.GetRandomLocation();
-                PhotonNetwork.Instantiate(NCPPrefab.name, randPos, Quaternion.identity, 0);
+				//photonView.RPC ("SpawnNPC", PhotonTargets.All, randPos);
+				PhotonNetwork.Instantiate(NCPPrefab.name, randPos, Quaternion.identity, 0);
             }
-        }*/
+        }
 
     }
 
@@ -78,6 +79,12 @@ public class GameManager : Photon.PunBehaviour {
         if (spyMissionsComplete >= numOfMissions)
             photonView.RPC("ShowSpiesWinScreen", PhotonTargets.All);
     }
+
+	[PunRPC]
+	void SpawnNPC(Vector3 pos)
+	{
+		Instantiate(NCPPrefab, pos, Quaternion.identity);
+	}
 
     [PunRPC]
     void CompleteMissionRPC(int missionsCompleted)
