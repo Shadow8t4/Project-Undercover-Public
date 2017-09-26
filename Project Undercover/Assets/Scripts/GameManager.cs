@@ -41,7 +41,7 @@ public class GameManager : Photon.PunBehaviour {
         PhotonNetwork.LeaveRoom();
     }
 
-    void Awake()
+    void Start()
     {
         if (PersistantPlayerSettings.character == PersistantPlayerSettings.Character.Guard)
         {

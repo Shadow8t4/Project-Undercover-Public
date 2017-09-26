@@ -51,7 +51,7 @@ public class SimpleNPCBehavior : Photon.PunBehaviour
         NavMeshHit hit;
         if (NavMesh.SamplePosition(randTarget, out hit, 1.0f, NavMesh.AllAreas))
             //return hit.position;
-			return new Vector3 (hit.position.x, 2.0f, hit.position.z);
+			return new Vector3 (hit.position.x, 1.0f, hit.position.z);
         else
             return GetRandomLocation();
     }
