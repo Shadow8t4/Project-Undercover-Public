@@ -66,12 +66,12 @@ public class GuardCameraController : Photon.PunBehaviour {
 
             if (Physics.Raycast(ray, out hit, 100.0f))
             {
-                if (hit.transform.parent.gameObject.tag == "NPC")
+                if (hit.transform.gameObject.tag == "NPC")
                 {
                     var manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
                     manager.photonView.RPC("ShowSpiesWinScreen", PhotonTargets.All);
                 }
-                else if (hit.transform.parent.gameObject.tag == "Spy")
+                else if (hit.transform.gameObject.tag == "Spy")
                 {
                     var manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
                     manager.photonView.RPC("ShowGuardsWinScreen", PhotonTargets.All);
