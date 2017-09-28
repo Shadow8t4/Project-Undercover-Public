@@ -15,6 +15,8 @@ public class GameManager : Photon.PunBehaviour {
     public bool onMissionCooldown = false;
     public Text missionsCompleteText;
     public GameObject winPanel;
+    public GameObject guardPanel;
+    public GameObject spyPanel;
     public Text winText;
     private int numOfMissions = 3;
 
@@ -46,6 +48,7 @@ public class GameManager : Photon.PunBehaviour {
         if (PersistantPlayerSettings.character == PersistantPlayerSettings.Character.Guard)
         {
             guardCamera.SetCameraEnabled(guardCamera, true);
+            guardPanel.SetActive(true);
         }
         else
         {
@@ -54,6 +57,7 @@ public class GameManager : Photon.PunBehaviour {
             var spy = PhotonNetwork.Instantiate(spyPrefab.name, randPos, Quaternion.identity, 0);
             spy.GetComponent<PlayerController>().enabled = true;
             spy.GetComponent<Spy>().SetColor();
+            spyPanel.SetActive(true);
         }
         
         if (PhotonNetwork.isMasterClient)
