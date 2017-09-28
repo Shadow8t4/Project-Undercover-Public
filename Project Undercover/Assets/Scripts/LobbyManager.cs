@@ -40,7 +40,7 @@ public class LobbyManager : Photon.PunBehaviour {
     public void StartGame()
     {
         if (PhotonNetwork.isMasterClient)
-            PhotonNetwork.LoadLevel("test_instantiate");
+            PhotonNetwork.LoadLevel("scene");
     }
 
     public override void OnPhotonPlayerConnected(PhotonPlayer other)
