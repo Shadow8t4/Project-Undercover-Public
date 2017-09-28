@@ -4,7 +4,6 @@ using UnityEngine.AI;
 
 public class SimpleNPCBehavior : Photon.PunBehaviour 
 {
-	private NavMeshAgent agent;
     private bool setTarget = true;
 
     enum State {
@@ -13,14 +12,13 @@ public class SimpleNPCBehavior : Photon.PunBehaviour
 		talking
 	};
 
-	void Start() 
+    void Start() 
 	{
-		agent = GetComponent<NavMeshAgent>();
 		//agent = gameObject.AddComponent<NavMeshAgent>();
         if (PhotonNetwork.isMasterClient) {
             photonView.RPC("TeleportToTarget", PhotonTargets.All, GetRandomLocation());
             photonView.RPC("SetColorRPC", PhotonTargets.All, new Vector3(Random.value, Random.value, Random.value));
-			Debug.Log ("setting color");
+			Debug.Log("setting color");
         }
     }
 
@@ -35,6 +33,11 @@ public class SimpleNPCBehavior : Photon.PunBehaviour
             StartCoroutine(UpdateDestination());
         }
 	}
+
+    NavMeshAgent GetAgent()
+    {
+        return GetComponent<NavMeshAgent>();
+    }
 
     IEnumerator UpdateDestination()
     {
@@ -59,14 +62,14 @@ public class SimpleNPCBehavior : Photon.PunBehaviour
     [PunRPC]
     void SetTarget(Vector3 target)
     {
-        agent.destination = target;
+        GetAgent().destination = target;
     }
 
     [PunRPC]
     void TeleportToTarget(Vector3 target)
     {
-        agent.Warp(target);
-        agent.destination = target;
+        GetAgent().Warp(target);
+        GetAgent().destination = target;
     }
 
     [PunRPC]

@@ -39,6 +39,4 @@ public class PlayerController : MonoBehaviour
             spy.HandShake();
         }
 	}
-
-    
 }

@@ -7,9 +7,6 @@ using System.Collections;
 
 namespace Com.MyCompany.MyGame
 {
-    /// <summary>
-    /// Player name input field. Let the user input his name, will appear above the player in the game.
-    /// </summary>
     [RequireComponent(typeof(InputField))]
     public class PlayerNameInputField : MonoBehaviour
     {
@@ -31,10 +28,6 @@ namespace Com.MyCompany.MyGame
             PhotonNetwork.playerName = defaultName;
         }
 
-        /// <summary>
-        /// Sets the name of the player, and save it in the PlayerPrefs for future sessions.
-        /// </summary>
-        /// <param name="value">The name of the Player</param>
         public void SetPlayerName(string value)
         {
             // force a trailing space string in case value is an empty string, else playerName would not be updated.
