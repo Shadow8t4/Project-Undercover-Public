@@ -46,7 +46,7 @@ public class CameraOcclusionProtector : MonoBehaviour
 #endif
 
     // Private fields
-    private Camera camera;
+    private new Camera camera;
     private Transform pivot; // The point at which the camera pivots around
     private Vector3 cameraVelocity;
     private float nearClipPlaneHalfHeight;
