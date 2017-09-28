@@ -20,7 +20,7 @@ public class SimpleNPCBehavior : Photon.PunBehaviour
         if (PhotonNetwork.isMasterClient) {
             photonView.RPC("TeleportToTarget", PhotonTargets.All, GetRandomLocation());
             photonView.RPC("SetColorRPC", PhotonTargets.All, new Vector3(Random.value, Random.value, Random.value));
-			Debug.Log ("setting color");
+			Debug.Log("setting color");
         }
     }
 
