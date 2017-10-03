@@ -27,6 +27,18 @@ public class CharacterAnimator : Photon.PunBehaviour
         }
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.isWriting)
+        {
+            stream.SendNext(controller.navMeshAgent.velocity.magnitude);
+        }
+        else
+        {
+            animator.SetFloat(paramHashes[(int)Params.MoveSpeed], (float)stream.ReceiveNext());
+        }
+    }
+
     protected virtual void Update()
     {
         animator.SetFloat(paramHashes[(int)Params.MoveSpeed], controller.navMeshAgent.velocity.magnitude);

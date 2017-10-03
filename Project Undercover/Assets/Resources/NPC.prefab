@@ -2120,7 +2120,8 @@ MonoBehaviour:
   ownershipTransfer: 0
   ObservedComponents:
   - {fileID: 114492707522239788}
-  ObservedComponentsFoldoutOpen: 1
+  - {fileID: 114063469203119278}
+  ObservedComponentsFoldoutOpen: 0
   viewIdField: 0
   instantiationId: -1
   currentMasterID: -1
@@ -2150,6 +2151,7 @@ MonoBehaviour:
   currentState: {fileID: 11400000, guid: 78ec31c429ad5074bb50d001b1a49a77, type: 2}
   remainState: {fileID: 11400000, guid: 5eb84557ff3e09f42b843e0b09653774, type: 2}
   idleState: {fileID: 0}
+  INTERACT_RANGE: 2
   navMeshAgent: {fileID: 0}
   animator: {fileID: 0}
   characterAnimator: {fileID: 0}
