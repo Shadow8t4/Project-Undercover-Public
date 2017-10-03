@@ -59,4 +59,8 @@ MonoBehaviour:
   - ShowSpiesWinScreen
   - SetEnabledRPC
   - SpawnNPC
+  - SetAnimatorBool
+  - SetDestinationRPC
+  - SetBoolRPC
+  - SetTriggerRPC
   DisableAutoOpenWizard: 1
