@@ -803,13 +803,14 @@ GameObject:
   - component: {fileID: 4578550263615494}
   - component: {fileID: 95997538810399862}
   - component: {fileID: 114077578116518258}
-  - component: {fileID: 114542938676306540}
   - component: {fileID: 195308308529917620}
   - component: {fileID: 114148290003448986}
   - component: {fileID: 136669760707136746}
+  - component: {fileID: 114764386739800882}
+  - component: {fileID: 114618342993419754}
   m_Layer: 10
   m_Name: Spy
-  m_TagString: Untagged
+  m_TagString: Spy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1637,7 +1638,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1736268233368836}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.90298784, y: 0, z: -0.08948016}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4675720493136984}
@@ -2129,14 +2130,15 @@ MonoBehaviour:
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 114542938676306540}
   - {fileID: 114077578116518258}
+  - {fileID: 114764386739800882}
+  - {fileID: 114618342993419754}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
---- !u!114 &114542938676306540
+--- !u!114 &114618342993419754
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2147,16 +2149,78 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaa73f69e18e25947894aebb6dc9932f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactions: []
+  spyInteractions: []
   currentState: {fileID: 11400000, guid: 1c694dfd46dd4e44b94f7853724fa1c0, type: 2}
   remainState: {fileID: 11400000, guid: 5eb84557ff3e09f42b843e0b09653774, type: 2}
-  idleState: {fileID: 11400000, guid: 1c694dfd46dd4e44b94f7853724fa1c0, type: 2}
-  INTERACT_RANGE: 2
   navMeshAgent: {fileID: 0}
   animator: {fileID: 0}
   characterAnimator: {fileID: 0}
-  interactionText: 
-  wayPointPrefab: {fileID: 1985718805234408, guid: c88d3f518f298774f86ed97b96c1bdc5,
-    type: 2}
+--- !u!114 &114764386739800882
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1736268233368836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PositionModel:
+    SynchronizeEnabled: 0
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 3
+    InterpolateOption: 2
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 1
+    InterpolateMoveTowardsAcceleration: 2
+    InterpolateMoveTowardsDeceleration: 2
+    InterpolateSpeedCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: -1
+        value: 0
+        inSlope: 0
+        outSlope: Infinity
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 4
+        value: 4
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ExtrapolateOption: 0
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+    DrawErrorGizmo: 1
+  m_RotationModel:
+    SynchronizeEnabled: 1
+    InterpolateOption: 1
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0
 --- !u!136 &136669760707136746
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -2370,7 +2434,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1736268233368836}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.1
+  m_Radius: 0.2
   m_Speed: 1.7
   m_Acceleration: 8
   avoidancePriority: 50
@@ -2382,4 +2446,4 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: -0.1
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0

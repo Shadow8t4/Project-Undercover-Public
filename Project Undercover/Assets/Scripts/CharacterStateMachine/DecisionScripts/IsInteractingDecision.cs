@@ -7,6 +7,6 @@ public class IsInteractingDecision : Decision
 {
     public override bool Decide(StateController controller)
     {
-        return Input.GetKeyDown(KeyCode.E);
+        return controller.IsInteracting;
     }
 }

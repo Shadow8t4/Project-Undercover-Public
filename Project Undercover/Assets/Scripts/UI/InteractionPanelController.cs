@@ -15,15 +15,15 @@ public class InteractionPanelController : MonoBehaviour {
         Hide();
     }
 
-    public void Reveal(string interactionText)
+    public static void Reveal(string interactionText)
     {
-        this.interactionText.text = interactionText;
-        mainPanel.SetActive(true);
+        ActivePanel.interactionText.text = interactionText;
+        ActivePanel.mainPanel.SetActive(true);
     }
 
-    public void Hide()
+    public static void Hide()
     {
-        mainPanel.SetActive(false);
+        ActivePanel.mainPanel.SetActive(false);
     }
 
     public static InteractionPanelController ActivePanel
@@ -44,5 +44,10 @@ public class InteractionPanelController : MonoBehaviour {
                 Debug.LogError("More than one interaction panel currently exists in the scene");
             }
         }
+    }
+
+    public static bool InteractionPrompted()
+    {
+        return ActivePanel.mainPanel.activeInHierarchy;
     }
 }

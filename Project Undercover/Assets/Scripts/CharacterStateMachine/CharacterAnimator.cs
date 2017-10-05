@@ -41,7 +41,8 @@ public class CharacterAnimator : Photon.PunBehaviour
 
     protected virtual void Update()
     {
-        animator.SetFloat(paramHashes[(int)Params.MoveSpeed], controller.navMeshAgent.velocity.magnitude);
+        if (photonView.isMine)
+            animator.SetFloat(paramHashes[(int)Params.MoveSpeed], controller.navMeshAgent.velocity.magnitude);
     }
 
     public bool GetTrigger(Params param)

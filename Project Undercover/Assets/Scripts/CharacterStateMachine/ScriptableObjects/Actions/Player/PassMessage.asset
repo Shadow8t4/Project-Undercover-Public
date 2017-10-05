@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Name: PassMessage
   m_EditorClassIdentifier: 
   trigger: 1
+  interactionMessage: Passing Message...

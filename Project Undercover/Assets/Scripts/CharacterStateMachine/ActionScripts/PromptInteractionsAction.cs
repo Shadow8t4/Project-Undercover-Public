@@ -10,21 +10,21 @@ public class PromptInteractionsAction : Action {
         string objectInteractionText = "Press 'E' to interact with ";
         if (ReceivedInteraction(controller))
         {
-            InteractionPanelController.ActivePanel.Reveal(controller.Interactor.interactionText);
+            InteractionPanelController.Reveal(controller.Interactor.name);
         }
         else if (SelectedObjectAvailable(controller))
         {
-            InteractionPanelController.ActivePanel.Reveal(objectInteractionText + controller.SelectedObject.GetInteractionTitle());
+            InteractionPanelController.Reveal(objectInteractionText + controller.SelectedObject.name);
         }
         else
         {
-            InteractionPanelController.ActivePanel.Hide();
+            InteractionPanelController.Hide();
         }
     }
 
     public override void EndAct(StateController controller)
     {
-        InteractionPanelController.ActivePanel.Hide();
+        InteractionPanelController.Hide();
     }
 
     // Other controller is attempting to interact with this controller
@@ -37,6 +37,8 @@ public class PromptInteractionsAction : Action {
     {
         if (controller.SelectedObject == null)
             return false;
-        return (controller.SelectedObject.transform.position - controller.transform.position).magnitude < controller.INTERACT_RANGE;
+        if (controller.SelectedObject.Interactor != null)
+            return false;
+        return (controller.SelectedObject.transform.position - controller.transform.position).magnitude < StateController.INTERACT_RANGE;
     }
 }

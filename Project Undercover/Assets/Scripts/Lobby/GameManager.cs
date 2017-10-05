@@ -8,8 +8,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : Photon.PunBehaviour {
 
     public GuardCameraController guardCamera;
-    public GameObject spyPrefab, NCPPrefab, cameraRigPrefab;
-    private int numNCPs = 9;
+    public GameObject spyPrefab, NPCPrefab, cameraRigPrefab;
+    public int numNpcs = 9;
     public int spyMissionsComplete = 0;
     public float waitBetweenMissions = 5.0f;
     public bool onMissionCooldown = false;
@@ -53,7 +53,7 @@ public class GameManager : Photon.PunBehaviour {
         else
         {
             guardCamera.GetComponent<GuardCamera>().laserSightEnabled = true;
-            Vector3 randPos = SimpleNPCBehavior.GetRandomLocation();
+            Vector3 randPos = StateController.GetRandomLocation();
             var spy = PhotonNetwork.Instantiate(spyPrefab.name, randPos, Quaternion.identity, 0);
 
             GameObject cameraRig = Instantiate(cameraRigPrefab, Vector3.zero, Quaternion.identity);
@@ -63,10 +63,10 @@ public class GameManager : Photon.PunBehaviour {
         
         if (PhotonNetwork.isMasterClient)
         {
-			for (int i = 0; i < numNCPs; i++)
+			for (int i = 0; i < numNpcs; i++)
             {
-                Vector3 randPos = SimpleNPCBehavior.GetRandomLocation();
-				PhotonNetwork.Instantiate(NCPPrefab.name, randPos, Quaternion.identity, 0);
+                Vector3 randPos = StateController.GetRandomLocation();
+				PhotonNetwork.Instantiate(NPCPrefab.name, randPos, Quaternion.identity, 0);
             }
         }
 
@@ -87,7 +87,7 @@ public class GameManager : Photon.PunBehaviour {
 	[PunRPC]
 	void SpawnNPC(Vector3 pos)
 	{
-		Instantiate(NCPPrefab, pos, Quaternion.identity);
+		Instantiate(NPCPrefab, pos, Quaternion.identity);
 	}
 
     [PunRPC]
