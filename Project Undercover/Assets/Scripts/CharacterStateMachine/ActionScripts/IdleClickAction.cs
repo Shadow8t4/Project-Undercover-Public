@@ -23,7 +23,7 @@ public class IdleClickAction : Action
             SelectableObject selectableObject;
             if (RaycastForSelectableObject(controller, ray, out selectableObject))
             {
-                Debug.Log("Selected object set to " + selectableObject.name);
+                // Debug.Log("Selected object set to " + selectableObject.name);
                 controller.SelectedObject = selectableObject;
                 controller.Destination = selectableObject.gameObject.transform.position;
                 return;
@@ -32,7 +32,6 @@ public class IdleClickAction : Action
             // At this point, the player didn't click on a selectable object,
             // so the player is probably issuing a move command.
             controller.SelectedObject = null;
-            Debug.Log("Moving Spy");
             RaycastToMoveController(controller, ray);
         }
     }

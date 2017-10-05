@@ -7,14 +7,14 @@ public class WaitInPlaceAction : Action {
 
     public override void StartAct(StateController controller)
     {
-        Debug.Log("Waiting in place!");
+        // Debug.Log("Waiting in place!");
         controller.FaceInteractor();
         controller.Destination = controller.transform.position;
     }
 
     public override void EndAct(StateController controller)
     {
-        Debug.Log("Done waiting in place!");
+        // Debug.Log("Done waiting in place!");
     }
 
 }

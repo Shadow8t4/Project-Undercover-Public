@@ -13,13 +13,16 @@ public class SpyInteractAction : Action
     public override void Act(StateController controller)
     {
         AnimatorStateInfo info = controller.animator.GetCurrentAnimatorStateInfo(0);
-        float progress = info.normalizedTime;
-        ProgressPanelController.ActivePanel.Progress = progress;
+        if (info.IsName(CharacterAnimator.GetParamName(controller.SelectedInteraction.characterInteraction)))
+        {
+            float progress = info.normalizedTime;
+            ProgressPanelController.ActivePanel.Progress = progress;
+        }
     }
 
     public override void EndAct(StateController controller)
     {
-        Debug.Log("Ending SpyInteract");
+        // Debug.Log("Ending SpyInteract");
         ProgressPanelController.ActivePanel.Hide();
         controller.FinishInteraction();
     }

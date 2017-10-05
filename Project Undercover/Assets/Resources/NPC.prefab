@@ -2150,6 +2150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaa73f69e18e25947894aebb6dc9932f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _queuedInteractorId: -1
+  _isInteracting: 0
   interactions:
   - {fileID: 11400000, guid: 218e2ddac8223e349a855bdae23819ab, type: 2}
   spyInteractions: []
@@ -2228,9 +2230,9 @@ MonoBehaviour:
     DrawErrorGizmo: 1
   m_RotationModel:
     SynchronizeEnabled: 1
-    InterpolateOption: 1
-    InterpolateRotateTowardsSpeed: 180
-    InterpolateLerpSpeed: 5
+    InterpolateOption: 2
+    InterpolateRotateTowardsSpeed: 300
+    InterpolateLerpSpeed: 15
   m_ScaleModel:
     SynchronizeEnabled: 0
     InterpolateOption: 0

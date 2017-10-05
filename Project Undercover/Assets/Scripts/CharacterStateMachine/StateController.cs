@@ -94,7 +94,7 @@ public class StateController : SelectableObject
         if (SelectedObject.IsInteracting)
             Debug.Log(SelectedObject.name + " is busy and cannot interact with " + name);
 
-        Debug.Log("Sending interaction request...");
+        // Debug.Log("Sending interaction request...");
         IsInteracting = true;
         SelectedObject.Interactor = this;
     }
@@ -113,7 +113,7 @@ public class StateController : SelectableObject
             if (_selectedObject != null)
             {
                 _selectedObject.Selected();
-                navMeshAgent.stoppingDistance = INTERACT_RANGE;
+                navMeshAgent.stoppingDistance = INTERACT_RANGE * 0.8f;
             }
             else
             {

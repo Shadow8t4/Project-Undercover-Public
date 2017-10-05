@@ -54,7 +54,8 @@ public class ProgressPanelController : MonoBehaviour {
 
     }
 
-    public static ProgressPanelController ActivePanel {
+    public static ProgressPanelController ActivePanel
+    {
         get
         {
             if (activePanel)

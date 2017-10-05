@@ -7,7 +7,7 @@ public class RoamAction : Action
 {
     public override void StartAct(StateController controller)
     {
-        Debug.Log("Started Roaming");
+        // Debug.Log("Started Roaming");
         controller.StartRoaming();
     }
 
@@ -15,14 +15,14 @@ public class RoamAction : Action
     {
         if (controller.Interactor != null && !controller.IsInteracting)
         {
-            Debug.Log("Accepting incomming interaction!");
+            // Debug.Log("Accepting incomming interaction!");
             controller.AcceptInteraction();
         }
     }
 
     public override void EndAct(StateController controller)
     {
-        Debug.Log("Stopping coroutine");
+        // Debug.Log("Stopping coroutine");
         controller.StopRoaming();
     }
 }
