@@ -33,6 +33,7 @@ public class ProgressPanelController : MonoBehaviour {
     public void Hide()
     {
         mainPanel.SetActive(false);
+        Progress = 0.0f;
     }
 
     public float Progress
