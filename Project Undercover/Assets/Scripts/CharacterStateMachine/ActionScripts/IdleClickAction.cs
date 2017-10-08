@@ -12,10 +12,16 @@ public class IdleClickAction : Action
     {
         ProgressPanelController.ActivePanel.Hide();
         controller.SelectedInteraction = null;
+        controller.Interactor = null;
+        controller.SelectedObject = null;
     }
 
     public override void Act(StateController controller)
     {
+        // Decline interactions here
+        if (Input.GetKeyDown(KeyCode.D))
+            controller.Interactor = null;
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Input.GetMouseButtonDown(0))
         {
@@ -25,7 +31,6 @@ public class IdleClickAction : Action
             {
                 // Debug.Log("Selected object set to " + selectableObject.name);
                 controller.SelectedObject = selectableObject;
-                controller.Destination = selectableObject.gameObject.transform.position;
                 return;
             }
 
@@ -34,6 +39,8 @@ public class IdleClickAction : Action
             controller.SelectedObject = null;
             RaycastToMoveController(controller, ray);
         }
+        if (controller.SelectedObject && !controller.IsInteracting)
+            controller.Destination = controller.SelectedObject.transform.position;
     }
 
     // Check if StateController clicked on a Selectable Object
@@ -45,7 +52,7 @@ public class IdleClickAction : Action
         if (Physics.Raycast(ray, out hit, 100.0f, mask))
         {
             SelectableObject selectable = hit.collider.gameObject.GetComponentInParent<SelectableObject>();
-            if (selectable != null && (StateController)selectable != controller && selectable.HasInteractions())
+            if (selectable != null && selectable != controller && selectable.HasInteractions())
             {
                 selectableObject = selectable;
                 return true;

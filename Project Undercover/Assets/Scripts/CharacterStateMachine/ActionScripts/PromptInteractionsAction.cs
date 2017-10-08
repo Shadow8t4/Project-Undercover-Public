@@ -10,7 +10,7 @@ public class PromptInteractionsAction : Action {
         string objectInteractionText = "Press 'E' to interact with ";
         if (ReceivedInteraction(controller))
         {
-            InteractionPanelController.Reveal(controller.Interactor.name);
+            InteractionPanelController.Reveal(controller.Interactor.name/* + " is trying to " + controller.Interactor.SelectedInteraction.interactionDescription*/);
         }
         else if (SelectedObjectAvailable(controller))
         {

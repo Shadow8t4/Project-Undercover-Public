@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class SelectableObject : Photon.PunBehaviour
+public abstract class SelectableObject : Photon.PunBehaviour, IEquatable<SelectableObject>
 {
     // PhotonView Id of interacting character
     [SerializeField]
@@ -98,5 +99,10 @@ public abstract class SelectableObject : Photon.PunBehaviour
     protected void SetInteractorRPC(int viewId)
     {
         _queuedInteractorId = viewId;
+    }
+
+    public virtual bool Equals(SelectableObject other)
+    {
+        return photonView.viewID == other.photonView.viewID;    
     }
 }

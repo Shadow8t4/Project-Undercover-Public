@@ -6,12 +6,16 @@ public class SpyInteractAction : Action
 {
     public override void StartAct(StateController controller)
     {
-        controller.FaceSelectedObject();
         controller.characterAnimator.SetTrigger(controller.SelectedInteraction.characterInteraction);
+        Vector3 awayDirection =(controller.transform.position - controller.SelectedObject.transform.position).normalized;
+        Vector3 newPos = controller.SelectedObject.transform.position + awayDirection * controller.SelectedInteraction.interactionDistance;
+        controller.navMeshAgent.stoppingDistance = 0.0f;
+        controller.Destination = newPos;
     }
 
     public override void Act(StateController controller)
     {
+        controller.FaceSelectedObject();
         AnimatorStateInfo info = controller.animator.GetCurrentAnimatorStateInfo(0);
         if (info.IsName(CharacterAnimator.GetParamName(controller.SelectedInteraction.characterInteraction)))
         {

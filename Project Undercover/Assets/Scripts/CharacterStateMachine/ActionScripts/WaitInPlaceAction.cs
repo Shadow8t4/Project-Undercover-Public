@@ -8,13 +8,22 @@ public class WaitInPlaceAction : Action {
     public override void StartAct(StateController controller)
     {
         // Debug.Log("Waiting in place!");
-        controller.FaceInteractor();
+        if (!controller.IsInteracting)
+            controller.IsInteracting = true;
         controller.Destination = controller.transform.position;
+    }
+
+    public override void Act(StateController controller)
+    {
+        controller.FaceInteractor();
     }
 
     public override void EndAct(StateController controller)
     {
         // Debug.Log("Done waiting in place!");
+        if (controller.characterAnimator.GetTrigger(CharacterAnimator.Params.Interrupted))
+            controller.Interactor.characterAnimator.SetTrigger(CharacterAnimator.Params.Interrupted);
+        controller.Interactor = null;
     }
 
 }

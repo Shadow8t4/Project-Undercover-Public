@@ -19,6 +19,8 @@ public class StateController : SelectableObject
     private SelectableObject _selectedObject;
     private Interaction _selectedInteraction;
     private Coroutine _roamCoroutine;
+    private static float _startInteractionProgressLimit = 0.3f;
+    private static float _endInteractionProgressLimit = 0.8f;
 
 
     void Awake()
@@ -44,8 +46,6 @@ public class StateController : SelectableObject
         if (photonView.isMine)
         {
             currentState.UpdateState(this);
-            if (SelectedObject)
-                Destination = SelectedObject.transform.position;
         }
     }
 
@@ -143,12 +143,22 @@ public class StateController : SelectableObject
     {
         return IsInteracting && SelectedObject.IsInteracting && SelectedObject.Interactor == this;
     }
+    public bool IsInteractionRejected()
+    {
+        return SelectedObject.Interactor != this;
+    }
+
 
     public void FinishInteraction()
     {
-        IsInteracting = false;
-        SelectedObject.Interactor = null;
-        SelectedObject = null;
+        if (IsInteracting)
+            IsInteracting = false;
+        if (SelectedObject)
+        {
+            if (SelectedObject.IsInteracting)
+                SelectedObject.IsInteracting = false;
+            SelectedObject = null;
+        }
     }
 
     public Interaction SelectedInteraction
@@ -161,22 +171,6 @@ public class StateController : SelectableObject
         {
             _selectedInteraction = value;
         }
-    }
-
-    public void FaceInteractor()
-    {
-        if (Interactor == null)
-            Debug.LogError("Cannot face a null Interactor");
-
-        transform.LookAt(Interactor.transform);
-    }
-
-    public void FaceSelectedObject()
-    {
-        if (SelectedObject == null)
-            Debug.LogError("Cannot face a null SelectedObject");
-
-        transform.LookAt(SelectedObject.transform);
     }
 
     public void StartRoaming()
@@ -195,6 +189,47 @@ public class StateController : SelectableObject
         {
             yield return new WaitForSeconds(UnityEngine.Random.value * 10.0f);
             Destination = GetRandomLocation();
+        }
+    }
+
+    public void FaceSelectedObject()
+    {
+        float progress = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        Vector3 otherPos = SelectedObject.transform.position;
+        float initialRotation = SelectedInteraction.initialRotation;
+        SetFacingRotation(otherPos, progress, initialRotation);
+    }
+
+    public void FaceInteractor()
+    {
+        if (Interactor == null)
+            Debug.LogError("Cannot face a null Interactor");
+
+        float progress = Interactor.animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        Vector3 otherPos = Interactor.transform.position;
+        if (Interactor.SelectedInteraction == null)
+            return;
+        float initialRotation = Interactor.SelectedInteraction.objectInitialRotation;
+        SetFacingRotation(otherPos, progress, initialRotation);
+    }
+
+    private void SetFacingRotation(Vector3 otherPos, float progress, float initialRotation)
+    {
+        if (progress > _startInteractionProgressLimit && progress < _endInteractionProgressLimit)
+            return;
+
+        Vector3 pos = transform.position;
+        Vector3 facingDirection = (otherPos - pos).normalized;
+        Quaternion facingRotation = Quaternion.FromToRotation(Vector3.forward, facingDirection);
+
+        if (progress < _startInteractionProgressLimit)
+        {
+            Quaternion adjustedRotation = facingRotation * Quaternion.Euler(0, initialRotation, 0);
+            transform.rotation = Quaternion.Slerp(transform.rotation, adjustedRotation, Time.deltaTime * 5.0f);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, facingRotation, Time.deltaTime * 5.0f);
         }
     }
 }

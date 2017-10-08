@@ -9,8 +9,6 @@ public class InitiatedInteractionDecision : Decision
     {
         return Input.GetKeyDown(KeyCode.E) &&
             InteractionPanelController.InteractionPrompted() &&
-            controller.SelectedObject != null;/* &&
-            !controller.SelectedObject.IsInteracting &&
-            controller.SelectedObject.Interactor == null;*/
+            controller.SelectedObject != null;
     }
 }
