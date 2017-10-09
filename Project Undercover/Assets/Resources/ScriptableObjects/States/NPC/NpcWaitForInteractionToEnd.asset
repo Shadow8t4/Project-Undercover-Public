@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a6a367e35acd7e44a0a598eaa1d6700, type: 3}
-  m_Name: Roam
+  m_Name: NpcWaitForInteractionToEnd
   m_EditorClassIdentifier: 
   actions:
-  - {fileID: 11400000, guid: 2234a34b55804f1408179400cd3068e1, type: 2}
+  - {fileID: 11400000, guid: a239cb93f4d18fa4baf7a01d44718dbb, type: 2}
   transitions:
   - decision: {fileID: 11400000, guid: aca961c852aa698469b7c4d36142c175, type: 2}
-    trueState: {fileID: 11400000, guid: 963f4d74f828ef94d85740708e8ce1d0, type: 2}
-    transitionValue: 1
+    trueState: {fileID: 11400000, guid: 78ec31c429ad5074bb50d001b1a49a77, type: 2}
+    transitionValue: 0

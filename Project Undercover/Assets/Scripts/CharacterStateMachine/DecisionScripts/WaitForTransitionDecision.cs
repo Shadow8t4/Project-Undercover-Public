@@ -7,7 +7,7 @@ public class WaitForTransitionDecision : Decision
 {
     public override bool Decide(StateController controller)
     {
-        string fromState = CharacterAnimator.GetParamName(controller.SelectedInteraction.characterInteraction);
+        string fromState = CharacterAnimator.GetParamName(controller.SelectedInteraction.initiatorAnimationTrigger);
         string toState = CharacterAnimator.GetParamName(CharacterAnimator.Params.Idle);
         string transitionName = fromState + " -> " + toState;
         var currentTransition = controller.animator.GetAnimatorTransitionInfo(0);

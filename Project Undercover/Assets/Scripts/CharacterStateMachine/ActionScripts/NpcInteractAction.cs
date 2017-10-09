@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using System;
 
-[CreateAssetMenu(menuName = "CharacterStateMachine/Actions/SpyInteract")]
-public class SpyInteractAction : Action
+[CreateAssetMenu(menuName = "CharacterStateMachine/Actions/NpcInteract")]
+public class NpcInteractAction : Action
 {
     public override void StartAct(StateController controller)
     {
@@ -14,18 +13,11 @@ public class SpyInteractAction : Action
     public override void Act(StateController controller)
     {
         controller.FaceSelectedObject();
-        AnimatorStateInfo info = controller.animator.GetCurrentAnimatorStateInfo(0);
-        if (info.IsName(CharacterAnimator.GetParamName(controller.SelectedInteraction.initiatorAnimationTrigger)))
-        {
-            float progress = info.normalizedTime;
-            ProgressPanelController.ActivePanel.Progress = progress;
-        }
     }
 
     public override void EndAct(StateController controller)
     {
-        // Debug.Log("Ending SpyInteract");
-        ProgressPanelController.ActivePanel.Hide();
         controller.FinishInteraction();
     }
 }
+

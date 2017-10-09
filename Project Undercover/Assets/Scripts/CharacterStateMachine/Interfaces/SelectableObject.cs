@@ -17,6 +17,7 @@ public abstract class SelectableObject : Photon.PunBehaviour, IEquatable<Selecta
     // Interactions only spies can perform on this object
     public Interaction[] spyInteractions;
 
+    public static List<SelectableObject> objects;
 
     private Color AvailableColor, InteractingColor;
     private bool isMousedOver = false;
@@ -74,6 +75,9 @@ public abstract class SelectableObject : Photon.PunBehaviour, IEquatable<Selecta
 
     protected virtual void Start()
     {
+        if (objects == null)
+            objects = new List<SelectableObject>();
+        objects.Add(this);
         isSpy = CompareTag("Spy");
         Renderers = GetComponentsInChildren<Renderer>();
         AvailableColor = Color.green;
@@ -82,6 +86,11 @@ public abstract class SelectableObject : Photon.PunBehaviour, IEquatable<Selecta
         {
             _materials.AddRange(renderer.materials);
         }
+    }
+
+    protected virtual void OnDestroy()
+    {
+        objects.Remove(this);
     }
 
     public Color TargetColor
@@ -104,17 +113,18 @@ public abstract class SelectableObject : Photon.PunBehaviour, IEquatable<Selecta
         }
     }
 
-    protected virtual void Update()
+    protected void LerpColors()
     {
         _currentColor = Color.Lerp(_currentColor, TargetColor, Time.deltaTime * LerpFactor);
-
         for (int i = 0; i < _materials.Count; i++)
         {
             _materials[i].SetColor("_GlowColor", _currentColor);
         }
+    }
 
-        if (Interactor != null && !isSpy)
-            AcceptInteraction();
+    protected virtual void Update()
+    {
+        LerpColors();
     }
 
     private void OnMouseEnter()
@@ -144,6 +154,25 @@ public abstract class SelectableObject : Photon.PunBehaviour, IEquatable<Selecta
         return (interactions.Length + spyInteractions.Length) > 0;
     }
 
+    public bool HasNpcInteractions()
+    {
+        return (interactions.Length) > 0;
+    }
+
+    public bool HasSpyInteractions()
+    {
+        return (spyInteractions.Length) > 0;
+    }
+
+    public Interaction GetRandomNpcInteraction()
+    {
+        if (interactions.Length <= 0)
+            Debug.LogError("Attempted to get a random npc interaction when " + name + " doesn't have any");
+
+        int randomIndex = UnityEngine.Random.Range(0, interactions.Length);
+        return interactions[randomIndex];
+    }
+
     public virtual string GetInteractionTitle()
     {
         return "";
@@ -151,6 +180,7 @@ public abstract class SelectableObject : Photon.PunBehaviour, IEquatable<Selecta
 
     public void AcceptInteraction()
     {
+        Debug.Log("Accepted Interaction");
         IsInteracting = true;
     }
 

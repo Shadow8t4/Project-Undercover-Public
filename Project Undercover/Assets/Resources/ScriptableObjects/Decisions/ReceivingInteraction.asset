@@ -8,8 +8,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3d87936679da304bb792186a3b641cd, type: 3}
-  m_Name: PassingMessageToIdleTransition
+  m_Script: {fileID: 11500000, guid: 5998aa6b572affe4a98a2e05c3ad4f0b, type: 3}
+  m_Name: ReceivingInteraction
   m_EditorClassIdentifier: 
-  fromState: PassingMessage
-  toState: Idle

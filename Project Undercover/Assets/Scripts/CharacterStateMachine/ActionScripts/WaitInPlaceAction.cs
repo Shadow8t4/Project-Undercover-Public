@@ -11,6 +11,8 @@ public class WaitInPlaceAction : Action {
         if (!controller.IsInteracting)
             controller.IsInteracting = true;
         controller.Destination = controller.transform.position;
+        controller.characterAnimator.SetBool(CharacterAnimator.Params.Interacting, true);
+        controller.characterAnimator.SetTrigger(controller.Interactor.SelectedInteraction.objectAnimationTrigger);
     }
 
     public override void Act(StateController controller)
@@ -25,5 +27,4 @@ public class WaitInPlaceAction : Action {
             controller.Interactor.characterAnimator.SetTrigger(CharacterAnimator.Params.Interrupted);
         controller.Interactor = null;
     }
-
 }

@@ -9,11 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a6a367e35acd7e44a0a598eaa1d6700, type: 3}
-  m_Name: WaitForInteractionToEnd
+  m_Name: NpcInteract
   m_EditorClassIdentifier: 
   actions:
-  - {fileID: 11400000, guid: a239cb93f4d18fa4baf7a01d44718dbb, type: 2}
+  - {fileID: 11400000, guid: 53ec3cb6384716d429b45c03bbf8ff18, type: 2}
   transitions:
-  - decision: {fileID: 11400000, guid: aca961c852aa698469b7c4d36142c175, type: 2}
+  - decision: {fileID: 11400000, guid: a61bb8f83adfb6c44b3bb56e5163ec72, type: 2}
     trueState: {fileID: 11400000, guid: 78ec31c429ad5074bb50d001b1a49a77, type: 2}
-    transitionValue: 0
+    transitionValue: 1
+  - decision: {fileID: 11400000, guid: 54c4574724be54540892c8db5aff93d1, type: 2}
+    trueState: {fileID: 11400000, guid: 78ec31c429ad5074bb50d001b1a49a77, type: 2}
+    transitionValue: 1

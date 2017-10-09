@@ -9,13 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e84829fa9f855a42b9c35f7eb3b3dc0, type: 3}
-  m_Name: Wave
+  m_Name: Handshake
   m_EditorClassIdentifier: 
-  interactionDescription: wave
-  receiverDescription: wave back
-  initiatorAnimationTrigger: 4
-  objectAnimationTrigger: 4
+  interactionDescription: handshake
+  receiverDescription: receive handshake
+  initiatorAnimationTrigger: 6
+  objectAnimationTrigger: 6
   result: 0
   initialRotation: 0
   objectInitialRotation: 0
-  interactionDistance: 1
+  interactionDistance: 1.2

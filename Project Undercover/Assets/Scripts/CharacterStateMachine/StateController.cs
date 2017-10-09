@@ -8,8 +8,7 @@ public class StateController : SelectableObject
 {
 
     public State currentState;
-    public State remainState;
-    public static readonly float INTERACT_RANGE = 1.5f;
+    public static readonly float INTERACT_RANGE = 1.8f;
 
     [HideInInspector] public NavMeshAgent navMeshAgent;
     [HideInInspector] public Animator animator;
@@ -53,12 +52,9 @@ public class StateController : SelectableObject
 
     public void TransitionToState(State nextState)
     {
-        if (nextState != remainState)
-        {
-            currentState.DoEndActions(this);
-            currentState = nextState;
-            currentState.DoStartActions(this);
-        }
+        currentState.DoEndActions(this);
+        currentState = nextState;
+        currentState.DoStartActions(this);
     }
     
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -212,9 +208,39 @@ public class StateController : SelectableObject
     {
         while (true)
         {
-            yield return new WaitForSeconds(UnityEngine.Random.value * 10.0f);
+            yield return new WaitForSeconds(UnityEngine.Random.value * 2.0f + 2.0f);
+            if (IsInteracting)
+                Debug.LogError("Should have stopped this coroutine by now");
+            if (UnityEngine.Random.value > 0.5f)
+            {
+                SelectableObject randomObject = GetRandomAvailableSelectableObject();
+                if (randomObject != null)
+                {
+                    SelectedObject = randomObject;
+                    IsInteracting = true;
+                    Interaction randomInteraction = SelectedObject.GetRandomNpcInteraction();
+                    SelectedInteraction = randomInteraction;
+                    Debug.Log(SelectedObject.name);
+                    yield return null;
+                }
+            }
             Destination = GetRandomLocation();
         }
+    }
+
+    private SelectableObject GetRandomAvailableSelectableObject(int tries=0)
+    {
+        int randomIndex = UnityEngine.Random.Range(0, objects.Count);
+        SelectableObject randomObject = objects[randomIndex];
+        if (randomObject == this && randomObject.HasNpcInteractions() && !randomObject.Interactor && !randomObject.IsInteracting)
+        {
+            if (tries < 3)
+                return GetRandomAvailableSelectableObject(tries++);
+            else
+                return null;
+        }
+
+        return objects[randomIndex];
     }
 
     public void FaceSelectedObject()
@@ -256,5 +282,13 @@ public class StateController : SelectableObject
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, facingRotation, Time.deltaTime * 10.0f);
         }
+    }
+
+    public void MoveForSelectedObjectInteraction()
+    {
+        Vector3 awayDirection = (transform.position - SelectedObject.transform.position).normalized;
+        Vector3 newPos = SelectedObject.transform.position + awayDirection * SelectedInteraction.interactionDistance;
+        navMeshAgent.stoppingDistance = 0.0f;
+        Destination = newPos;
     }
 }

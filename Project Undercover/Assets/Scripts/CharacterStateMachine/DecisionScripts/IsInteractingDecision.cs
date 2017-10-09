@@ -7,6 +7,6 @@ public class IsInteractingDecision : Decision
 {
     public override bool Decide(StateController controller)
     {
-        return controller.IsInteracting;
+        return controller.IsInteracting && controller.Interactor != null;
     }
 }

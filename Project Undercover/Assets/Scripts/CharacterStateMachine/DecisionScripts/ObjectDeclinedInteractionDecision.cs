@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "CharacterStateMachine/Decisions/ObjectDeclinedInteraction")]
-class ObjectDeclinedInteractionDecision : Decision
+public class ObjectDeclinedInteractionDecision : Decision
 {
     public override bool Decide(StateController controller)
     {

@@ -8,7 +8,7 @@ public class Interaction : ScriptableObject
     public string interactionDescription;
     [Tooltip("Descriptions follow the prompt \"Press 'E' to ...\"")]
     public string receiverDescription;
-    public CharacterAnimator.Params characterInteraction;
+    public CharacterAnimator.Params initiatorAnimationTrigger, objectAnimationTrigger;
     public InteractionResult result;
     public float initialRotation;
     public float objectInitialRotation;
@@ -18,11 +18,11 @@ public class Interaction : ScriptableObject
     {
         Nothing, SpyMissionComplete
     }
-
+    /*
     public override int GetHashCode()
     {
         return interactionDescription.GetHashCode() ^ (int)characterInteraction;
-    }
+    }*/
 
     public void ExecuteResult(StateController controller)
     {

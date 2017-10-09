@@ -9,7 +9,7 @@ public class CharacterAnimator : Photon.PunBehaviour
 
     public enum Params
     {
-        Idle, MoveSpeed, PassingMessage, Interrupted, Wave
+        Idle, MoveSpeed, PassingMessage, Interrupted, Wave, Acknowledging, Handshake, Interacting, Bow
     }
 
     protected virtual void Awake()
@@ -53,6 +53,16 @@ public class CharacterAnimator : Photon.PunBehaviour
     public void SetTrigger(Params param)
     {
         photonView.RPC("SetTriggerRPC", PhotonTargets.All, paramHashes[(int)param], true);
+    }
+
+    public bool GetBool(Params param)
+    {
+        return animator.GetBool(paramHashes[(int)param]);
+    }
+
+    public void SetBool(Params param, bool value)
+    {
+        photonView.RPC("SetBoolRPC", PhotonTargets.All, paramHashes[(int)param], value);
     }
 
     public void ResetTrigger(Params param)

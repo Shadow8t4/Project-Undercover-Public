@@ -9,13 +9,13 @@ public class RoamAction : Action
     {
         // Debug.Log("Started Roaming");
         controller.StartRoaming();
+        controller.characterAnimator.SetBool(CharacterAnimator.Params.Interacting, false);
     }
 
     public override void Act(StateController controller)
     {
-        if (controller.Interactor != null && !controller.IsInteracting)
+        if (controller.Interactor != null && !controller.IsInteracting && InRangeOfInteractor(controller))
         {
-            // Debug.Log("Accepting incomming interaction!");
             controller.AcceptInteraction();
         }
     }
@@ -24,5 +24,10 @@ public class RoamAction : Action
     {
         // Debug.Log("Stopping coroutine");
         controller.StopRoaming();
+    }
+
+    private bool InRangeOfInteractor(StateController controller)
+    {
+        return (controller.Interactor.transform.position - controller.transform.position).magnitude < StateController.INTERACT_RANGE;
     }
 }

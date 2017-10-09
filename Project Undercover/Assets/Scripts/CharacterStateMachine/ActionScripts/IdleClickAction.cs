@@ -15,6 +15,7 @@ public class IdleClickAction : Action
         controller.SelectedInteraction = null;
         controller.Interactor = null;
         controller.SelectedObject = null;
+        controller.characterAnimator.SetBool(CharacterAnimator.Params.Interacting, false);
     }
 
     public override void Act(StateController controller)

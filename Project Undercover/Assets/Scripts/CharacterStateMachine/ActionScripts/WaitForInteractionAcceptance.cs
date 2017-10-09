@@ -8,17 +8,5 @@ public class WaitForInteractionAcceptance : Action
         controller.InitiateInteractionWithSelectedObject();
         ProgressPanelController.ActivePanel.Reveal(controller.SelectedInteraction.interactionDescription);
     }
-
-    public override void EndAct(StateController controller)
-    {
-        //Debug.Log("Finished waiting for acceptance");
-    }
-
-    private Interaction GetFirstInteraction(StateController controller)
-    {
-        if (controller.SelectedObject.interactions.Length > 0)
-            return controller.SelectedObject.interactions[0];
-        return controller.SelectedObject.spyInteractions[0];
-    }
 }
 
