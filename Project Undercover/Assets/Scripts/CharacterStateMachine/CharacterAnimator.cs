@@ -9,7 +9,7 @@ public class CharacterAnimator : Photon.PunBehaviour
 
     public enum Params
     {
-        MoveSpeed = 0, PassingMessage, Interrupted
+        Idle, MoveSpeed, PassingMessage, Interrupted, Wave
     }
 
     protected virtual void Awake()

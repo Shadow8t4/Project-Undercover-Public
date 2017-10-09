@@ -35,14 +35,16 @@ public class StateController : SelectableObject
         characterAnimator = GetComponent<CharacterAnimator>();
     }
 
-    public void Start()
+    protected override void Start()
     {
+        base.Start();
         if (photonView.isMine)
             currentState.DoStartActions(this);
     }
 
-    public override void Update()
+    protected override void Update()
     {
+        base.Update();
         if (photonView.isMine)
         {
             currentState.UpdateState(this);
@@ -108,7 +110,9 @@ public class StateController : SelectableObject
         set
         {
             if (_selectedObject != null)
+            {
                 _selectedObject.Deselected();
+            }
             _selectedObject = value;
             if (_selectedObject != null)
             {
@@ -156,7 +160,10 @@ public class StateController : SelectableObject
         if (SelectedObject)
         {
             if (SelectedObject.IsInteracting)
+            {
                 SelectedObject.IsInteracting = false;
+            }
+            SelectedObject.Interactor = null;
             SelectedObject = null;
         }
     }
@@ -169,8 +176,26 @@ public class StateController : SelectableObject
         }
         set
         {
-            _selectedInteraction = value;
+            int hash = 0;
+            if (value != null)
+                hash = value.GetHashCode();
+            photonView.RPC("SetSelectedInteractionRPC", PhotonTargets.All, hash);
         }
+    }
+
+    [PunRPC]
+    private void SetSelectedInteractionRPC(int hash)
+    {
+        Interaction[] foundInteractions = (Interaction[])Resources.FindObjectsOfTypeAll(typeof(Interaction));
+        foreach (var interaction in foundInteractions)
+        {
+            if (interaction.GetHashCode() == hash)
+            {
+                _selectedInteraction = interaction;
+                return;
+            }
+        }
+        _selectedInteraction = null;
     }
 
     public void StartRoaming()
@@ -203,7 +228,7 @@ public class StateController : SelectableObject
     public void FaceInteractor()
     {
         if (Interactor == null)
-            Debug.LogError("Cannot face a null Interactor");
+            return;
 
         float progress = Interactor.animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
         Vector3 otherPos = Interactor.transform.position;
@@ -225,11 +250,11 @@ public class StateController : SelectableObject
         if (progress < _startInteractionProgressLimit)
         {
             Quaternion adjustedRotation = facingRotation * Quaternion.Euler(0, initialRotation, 0);
-            transform.rotation = Quaternion.Slerp(transform.rotation, adjustedRotation, Time.deltaTime * 5.0f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, adjustedRotation, Time.deltaTime * 10.0f);
         }
         else
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, facingRotation, Time.deltaTime * 5.0f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, facingRotation, Time.deltaTime * 10.0f);
         }
     }
 }

@@ -355,7 +355,6 @@ GameObject:
   - component: {fileID: 114492707522239788}
   - component: {fileID: 114063469203119278}
   - component: {fileID: 136748321063637496}
-  - component: {fileID: 114503176627609734}
   - component: {fileID: 114776369420944768}
   m_Layer: 10
   m_Name: NPC
@@ -2153,26 +2152,15 @@ MonoBehaviour:
   _queuedInteractorId: -1
   _isInteracting: 0
   interactions:
+  - {fileID: 11400000, guid: 01a3cf8545fc70f4c90095f144ac9b01, type: 2}
+  spyInteractions:
   - {fileID: 11400000, guid: 218e2ddac8223e349a855bdae23819ab, type: 2}
-  spyInteractions: []
+  GlowColor: {r: 0, g: 1, b: 0, a: 0}
   currentState: {fileID: 11400000, guid: 78ec31c429ad5074bb50d001b1a49a77, type: 2}
-  remainState: {fileID: 11400000, guid: 5eb84557ff3e09f42b843e0b09653774, type: 2}
+  remainState: {fileID: 0}
   navMeshAgent: {fileID: 0}
   animator: {fileID: 0}
   characterAnimator: {fileID: 0}
---- !u!114 &114503176627609734
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1249949894527080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d597e878c9aa5f1478d29321afbd8919, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlowColor: {r: 0, g: 1, b: 0.006896496, a: 0}
-  LerpFactor: 10
 --- !u!114 &114776369420944768
 MonoBehaviour:
   m_ObjectHideFlags: 1

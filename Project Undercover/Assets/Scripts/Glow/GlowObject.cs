@@ -17,11 +17,11 @@ public class GlowObject : MonoBehaviour
 		get { return _currentColor; }
 	}
 
-	private List<Material> _materials = new List<Material>();
-	private Color _currentColor;
-	private Color _targetColor;
+    private List<Material> _materials = new List<Material>();
+    private Color _currentColor;
+    private Color _targetColor;
 
-	void Start()
+	protected virtual void Start()
 	{
 		Renderers = GetComponentsInChildren<Renderer>();
 
@@ -31,23 +31,23 @@ public class GlowObject : MonoBehaviour
 		}
 	}
 
-	private void OnMouseEnter()
+	protected void OnMouseEnter()
 	{
 		_targetColor = GlowColor;
 		enabled = true;
 	}
 
-	private void OnMouseExit()
+    protected void OnMouseExit()
 	{
 		_targetColor = Color.black;
         _targetColor.a = 0.0f;
         enabled = true;
 	}
 
-	/// <summary>
-	/// Loop over all cached materials and update their color, disable self if we reach our target color.
-	/// </summary>
-	private void Update()
+    /// <summary>
+    /// Loop over all cached materials and update their color, disable self if we reach our target color.
+    /// </summary>
+    protected void Update()
 	{
 		_currentColor = Color.Lerp(_currentColor, _targetColor, Time.deltaTime * LerpFactor);
 

@@ -52,7 +52,7 @@ public class GameManager : Photon.PunBehaviour {
         }
         else
         {
-            guardCamera.GetComponent<GuardCamera>().laserSightEnabled = true;
+            guardCamera.GetComponent<GuardCamera>().spotLight.enabled = true;
             Vector3 randPos = StateController.GetRandomLocation();
             var spy = PhotonNetwork.Instantiate(spyPrefab.name, randPos, Quaternion.identity, 0);
 

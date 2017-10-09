@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 [CreateAssetMenu(menuName = "CharacterStateMachine/Actions/IdleClick")]
 public class IdleClickAction : Action
@@ -18,27 +19,32 @@ public class IdleClickAction : Action
 
     public override void Act(StateController controller)
     {
-        // Decline interactions here
-        if (Input.GetKeyDown(KeyCode.D))
-            controller.Interactor = null;
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-            // Check first if the player clicked on a selectable object
-            SelectableObject selectableObject;
-            if (RaycastForSelectableObject(controller, ray, out selectableObject))
+            if (controller.Interactor)
             {
-                // Debug.Log("Selected object set to " + selectableObject.name);
-                controller.SelectedObject = selectableObject;
-                return;
+                controller.Interactor = null;
+                InteractionPanelController.ActivePanel.Hide();
             }
+            else
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                // Check first if the player clicked on a selectable object
+                SelectableObject selectableObject;
+                if (RaycastForSelectableObject(controller, ray, out selectableObject))
+                {
+                    controller.SelectedObject = selectableObject;
+                    return;
+                }
 
-            // At this point, the player didn't click on a selectable object,
-            // so the player is probably issuing a move command.
-            controller.SelectedObject = null;
-            RaycastToMoveController(controller, ray);
+                // At this point, the player didn't click on a selectable object,
+                // so the player is probably issuing a move command.
+                controller.SelectedObject = null;
+                RaycastToMoveController(controller, ray);
+            }
         }
+
+        // If the player has selected an object, move the player toward that object
         if (controller.SelectedObject && !controller.IsInteracting)
             controller.Destination = controller.SelectedObject.transform.position;
     }

@@ -7,24 +7,23 @@ public class PromptInteractionsAction : Action {
 
     public override void Act(StateController controller)
     {
-        string objectInteractionText = "Press 'E' to interact with ";
         if (ReceivedInteraction(controller))
         {
-            InteractionPanelController.Reveal(controller.Interactor.name/* + " is trying to " + controller.Interactor.SelectedInteraction.interactionDescription*/);
+            InteractionPanelController.ActivePanel.AcceptInteractionReveal(controller);
         }
         else if (SelectedObjectAvailable(controller))
         {
-            InteractionPanelController.Reveal(objectInteractionText + controller.SelectedObject.name);
+            InteractionPanelController.ActivePanel.SelectInteractionReveal(controller);
         }
         else
         {
-            InteractionPanelController.Hide();
+            //InteractionPanelController.Hide();
         }
     }
 
     public override void EndAct(StateController controller)
     {
-        InteractionPanelController.Hide();
+        InteractionPanelController.ActivePanel.Hide();
     }
 
     // Other controller is attempting to interact with this controller

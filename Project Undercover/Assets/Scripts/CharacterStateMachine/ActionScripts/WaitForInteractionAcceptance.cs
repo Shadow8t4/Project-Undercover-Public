@@ -5,8 +5,6 @@ public class WaitForInteractionAcceptance : Action
 {
     public override void StartAct(StateController controller)
     {
-        // Todo: Remove this line once the "interaction selector" UI is finished
-        controller.SelectedInteraction = GetFirstInteraction(controller);
         controller.InitiateInteractionWithSelectedObject();
         ProgressPanelController.ActivePanel.Reveal(controller.SelectedInteraction.interactionDescription);
     }

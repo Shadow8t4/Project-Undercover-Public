@@ -65,4 +65,5 @@ MonoBehaviour:
   - SetTriggerRPC
   - SetInteractorRPC
   - SetIsInteractingRPC
+  - SetSelectedInteractionRPC
   DisableAutoOpenWizard: 1

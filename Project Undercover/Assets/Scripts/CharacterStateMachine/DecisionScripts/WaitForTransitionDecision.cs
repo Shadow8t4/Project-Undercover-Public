@@ -5,10 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "CharacterStateMachine/Decisions/WaitForTransition")]
 public class WaitForTransitionDecision : Decision
 {
-    public string fromState, toState;
-
     public override bool Decide(StateController controller)
     {
+        string fromState = CharacterAnimator.GetParamName(controller.SelectedInteraction.characterInteraction);
+        string toState = CharacterAnimator.GetParamName(CharacterAnimator.Params.Idle);
         string transitionName = fromState + " -> " + toState;
         var currentTransition = controller.animator.GetAnimatorTransitionInfo(0);
         if (currentTransition.IsName(transitionName))
