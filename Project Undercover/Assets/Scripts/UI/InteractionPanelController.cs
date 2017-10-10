@@ -65,6 +65,8 @@ public class InteractionPanelController : MonoBehaviour {
         }
 
         interactionsDropdown.AddOptions(optionsList);
+        if (interactionsDropdown.value > interactionsDropdown.options.Count)
+            interactionsDropdown.value = 0;
         _controller.SelectedInteraction = ((InteractionData)(interactionsDropdown.options[interactionsDropdown.value])).interaction;
         ActivePanel.mainPanel.SetActive(true);
     }
