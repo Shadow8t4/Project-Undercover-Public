@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a6a367e35acd7e44a0a598eaa1d6700, type: 3}
+  m_Name: WaitingForAcceptance
+  m_EditorClassIdentifier: 
+  actions:
+  - {fileID: 11400000, guid: b241bf77cda4ed84992fa09741f347ef, type: 2}
+  - {fileID: 11400000, guid: 309e42450c40f714a905a0589605892b, type: 2}
+  transitions:
+  - decision: {fileID: 11400000, guid: 54c4574724be54540892c8db5aff93d1, type: 2}
+    trueState: {fileID: 11400000, guid: 1c694dfd46dd4e44b94f7853724fa1c0, type: 2}
+    transitionValue: 1
+  - decision: {fileID: 11400000, guid: d1e5ed22b1756104794e4cdad03e7bd0, type: 2}
+    trueState: {fileID: 11400000, guid: f92df2056f917ce45921c2f8b94c75dd, type: 2}
+    transitionValue: 1
+  - decision: {fileID: 11400000, guid: a3e30efde30a6294ba3fee0fa08b7417, type: 2}
+    trueState: {fileID: 11400000, guid: 1c694dfd46dd4e44b94f7853724fa1c0, type: 2}
+    transitionValue: 1

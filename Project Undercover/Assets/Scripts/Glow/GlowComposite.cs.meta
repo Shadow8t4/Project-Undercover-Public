@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c93cbc6a57a861b4790af0898dde17a2
+timeCreated: 1507080952
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - glowCompositeShader: {fileID: 4800000, guid: 874640b11a2bbe24a8655c75d3544e5a,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

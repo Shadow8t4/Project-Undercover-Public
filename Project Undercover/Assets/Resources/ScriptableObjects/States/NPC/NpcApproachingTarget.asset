@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a6a367e35acd7e44a0a598eaa1d6700, type: 3}
+  m_Name: NpcApproachingTarget
+  m_EditorClassIdentifier: 
+  actions:
+  - {fileID: 11400000, guid: 9d5f7cb18596843449c520a3adde576a, type: 2}
+  transitions:
+  - decision: {fileID: 11400000, guid: 5b77ad8a89f818e47be8530f8148553b, type: 2}
+    trueState: {fileID: 11400000, guid: a70ae0bc5f16c9648ab8c7b1963547ac, type: 2}
+    transitionValue: 1
+  - decision: {fileID: 11400000, guid: 010846579b426744d84ebd4f5f2ce837, type: 2}
+    trueState: {fileID: 11400000, guid: 963f4d74f828ef94d85740708e8ce1d0, type: 2}
+    transitionValue: 1
+  - decision: {fileID: 11400000, guid: 4078502a092bd9a41be210395f51aef0, type: 2}
+    trueState: {fileID: 11400000, guid: 78ec31c429ad5074bb50d001b1a49a77, type: 2}
+    transitionValue: 1
