@@ -7,9 +7,15 @@ public class RoamAction : Action
 {
     public override void StartAct(StateController controller)
     {
-        // Debug.Log("Started Roaming");
         controller.StartRoaming();
         controller.characterAnimator.SetBool(CharacterAnimator.Params.Interacting, false);
+        if (controller.SelectedObject)
+        {
+            controller.SelectedObject.IsInteracting = false;
+            controller.SelectedObject = null;
+        }
+        if (controller.IsInteracting)
+            controller.IsInteracting = false;
     }
 
     public override void Act(StateController controller)

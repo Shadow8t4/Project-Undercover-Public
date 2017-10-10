@@ -48,17 +48,22 @@ public class InteractionPanelController : MonoBehaviour {
         if (mainPanel.activeInHierarchy)
             return;
         interactionsDropdown.ClearOptions();
+
         var optionsList = new List<Dropdown.OptionData>();
         foreach (Interaction interaction in controller.SelectedObject.interactions)
         {
             var data = new InteractionData(interaction, false);
             optionsList.Add(data);
         }
-        foreach (Interaction interaction in controller.SelectedObject.spyInteractions)
+        if (controller.SelectedObject.CompareTag("Spy"))
         {
-            var data = new InteractionData(interaction, true); 
-            optionsList.Add(data);
+            foreach (Interaction interaction in controller.SelectedObject.spyInteractions)
+            {
+                var data = new InteractionData(interaction, true);
+                optionsList.Add(data);
+            }
         }
+
         interactionsDropdown.AddOptions(optionsList);
         _controller.SelectedInteraction = ((InteractionData)(interactionsDropdown.options[interactionsDropdown.value])).interaction;
         ActivePanel.mainPanel.SetActive(true);

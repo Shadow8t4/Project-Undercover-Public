@@ -18,11 +18,16 @@ public class Interaction : ScriptableObject
     {
         Nothing, SpyMissionComplete
     }
-    /*
-    public override int GetHashCode()
+    
+    public int GetHash()
     {
-        return interactionDescription.GetHashCode() ^ (int)characterInteraction;
-    }*/
+        return interactionDescription.Length + (int)initiatorAnimationTrigger + (int)objectAnimationTrigger;
+    }
+
+    public bool CompareHash(int hash)
+    {
+        return hash == GetHash();
+    }
 
     public void ExecuteResult(StateController controller)
     {

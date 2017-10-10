@@ -90,7 +90,7 @@ public class StateController : SelectableObject
             Debug.LogError("Attempted to set interactor as self");
 
         if (SelectedObject.IsInteracting)
-            Debug.Log(SelectedObject.name + " is busy and cannot interact with " + name);
+            return;
 
         // Debug.Log("Sending interaction request...");
         IsInteracting = true;
@@ -174,7 +174,7 @@ public class StateController : SelectableObject
         {
             int hash = 0;
             if (value != null)
-                hash = value.GetHashCode();
+                hash = value.GetHash();
             photonView.RPC("SetSelectedInteractionRPC", PhotonTargets.All, hash);
         }
     }
@@ -185,7 +185,7 @@ public class StateController : SelectableObject
         Interaction[] foundInteractions = (Interaction[])Resources.FindObjectsOfTypeAll(typeof(Interaction));
         foreach (var interaction in foundInteractions)
         {
-            if (interaction.GetHashCode() == hash)
+            if (interaction.CompareHash(hash))
             {
                 _selectedInteraction = interaction;
                 return;
@@ -208,10 +208,10 @@ public class StateController : SelectableObject
     {
         while (true)
         {
-            yield return new WaitForSeconds(UnityEngine.Random.value * 2.0f + 2.0f);
+            yield return new WaitForSeconds(UnityEngine.Random.value * 10.0f + 0.5f);
             if (IsInteracting)
                 Debug.LogError("Should have stopped this coroutine by now");
-            if (UnityEngine.Random.value > 0.5f)
+            if (UnityEngine.Random.value < 0.2f)
             {
                 SelectableObject randomObject = GetRandomAvailableSelectableObject();
                 if (randomObject != null)
@@ -220,7 +220,6 @@ public class StateController : SelectableObject
                     IsInteracting = true;
                     Interaction randomInteraction = SelectedObject.GetRandomNpcInteraction();
                     SelectedInteraction = randomInteraction;
-                    Debug.Log(SelectedObject.name);
                     yield return null;
                 }
             }
@@ -290,5 +289,10 @@ public class StateController : SelectableObject
         Vector3 newPos = SelectedObject.transform.position + awayDirection * SelectedInteraction.interactionDistance;
         navMeshAgent.stoppingDistance = 0.0f;
         Destination = newPos;
+    }
+
+    public bool InRangeOfSelectedObject()
+    {
+        return (SelectedObject.transform.position - transform.position).magnitude < INTERACT_RANGE;
     }
 }

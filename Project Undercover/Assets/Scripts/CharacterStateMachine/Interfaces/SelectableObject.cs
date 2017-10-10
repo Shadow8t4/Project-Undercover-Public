@@ -180,7 +180,6 @@ public abstract class SelectableObject : Photon.PunBehaviour, IEquatable<Selecta
 
     public void AcceptInteraction()
     {
-        Debug.Log("Accepted Interaction");
         IsInteracting = true;
     }
 

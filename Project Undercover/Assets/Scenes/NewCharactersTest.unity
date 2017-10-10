@@ -1598,7 +1598,7 @@ MonoBehaviour:
   NPCPrefab: {fileID: 1249949894527080, guid: ea4aade53c5c4714b8b9c335e8100cf0, type: 2}
   cameraRigPrefab: {fileID: 1009033979625728, guid: 1764211b5690c164d82aa46fa4ec707d,
     type: 2}
-  numNpcs: 5
+  numNpcs: 10
   spyMissionsComplete: 0
   waitBetweenMissions: 5
   onMissionCooldown: 0
