@@ -18,7 +18,6 @@ public class InteractionPanelController : MonoBehaviour {
     [SerializeField]
     private Text requestedInteractionText;
     private static InteractionPanelController activePanel;
-    private List<Dropdown.OptionData> optionsList;
     private StateController _controller;
 
     public class InteractionData : Dropdown.OptionData
@@ -38,7 +37,6 @@ public class InteractionPanelController : MonoBehaviour {
     void Start()
     {
         ActivePanel = this;
-        optionsList = new List<Dropdown.OptionData>();
         Hide();
     }
 
@@ -81,7 +79,7 @@ public class InteractionPanelController : MonoBehaviour {
         _controller = controller;
         requestPanel.SetActive(true);
         string description = controller.Interactor.SelectedInteraction.receiverDescription;
-        requestedInteractionText.GetComponent<Text>().text = "Press 'E' to " + description; //+ "\n(or press 'D' to decline)";
+        requestedInteractionText.GetComponent<Text>().text = "Press 'E' to " + description;
     }
 
     public void Hide()
