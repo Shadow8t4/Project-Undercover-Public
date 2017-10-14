@@ -352,10 +352,10 @@ GameObject:
   - component: {fileID: 95559352611635020}
   - component: {fileID: 114052105454001458}
   - component: {fileID: 195641778051991382}
-  - component: {fileID: 114492707522239788}
   - component: {fileID: 114063469203119278}
   - component: {fileID: 136748321063637496}
   - component: {fileID: 114776369420944768}
+  - component: {fileID: 114492707522239788}
   m_Layer: 10
   m_Name: NPC
   m_TagString: NPC
@@ -2158,10 +2158,10 @@ MonoBehaviour:
   spyInteractions:
   - {fileID: 11400000, guid: 218e2ddac8223e349a855bdae23819ab, type: 2}
   currentState: {fileID: 11400000, guid: 78ec31c429ad5074bb50d001b1a49a77, type: 2}
-  remainState: {fileID: 0}
   navMeshAgent: {fileID: 0}
   animator: {fileID: 0}
   characterAnimator: {fileID: 0}
+  colorsObject: {fileID: 11400000, guid: 0ca93fb1ceb40684f8b400eb4d65bffe, type: 2}
 --- !u!114 &114776369420944768
 MonoBehaviour:
   m_ObjectHideFlags: 1

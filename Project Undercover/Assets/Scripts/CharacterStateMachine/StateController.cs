@@ -21,7 +21,6 @@ public class StateController : SelectableObject
     private static float _startInteractionProgressLimit = 0.3f;
     private static float _endInteractionProgressLimit = 0.8f;
 
-
     void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -32,6 +31,12 @@ public class StateController : SelectableObject
         }
         animator = GetComponent<Animator>();
         characterAnimator = GetComponent<CharacterAnimator>();
+        if (PhotonNetwork.isMasterClient)
+        {
+            Color color = NpcColors.GetAvailableColor();
+            Vector3 colorAsVector = new Vector3(color.r, color.g, color.b);
+            photonView.RPC("SetCharacterColorRPC", PhotonTargets.All, colorAsVector);
+        }
     }
 
     protected override void Start()
@@ -179,20 +184,7 @@ public class StateController : SelectableObject
         }
     }
 
-    [PunRPC]
-    private void SetSelectedInteractionRPC(int hash)
-    {
-        Interaction[] foundInteractions = (Interaction[])Resources.FindObjectsOfTypeAll(typeof(Interaction));
-        foreach (var interaction in foundInteractions)
-        {
-            if (interaction.CompareHash(hash))
-            {
-                _selectedInteraction = interaction;
-                return;
-            }
-        }
-        _selectedInteraction = null;
-    }
+
 
     public void StartRoaming()
     {
@@ -275,11 +267,11 @@ public class StateController : SelectableObject
         if (progress < _startInteractionProgressLimit)
         {
             Quaternion adjustedRotation = facingRotation * Quaternion.Euler(0, initialRotation, 0);
-            transform.rotation = Quaternion.Slerp(transform.rotation, adjustedRotation, Time.deltaTime * 10.0f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, adjustedRotation, progress * (1.0f / _startInteractionProgressLimit));
         }
         else
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, facingRotation, Time.deltaTime * 10.0f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, facingRotation, (progress - _endInteractionProgressLimit) * (1.0f / (1 - _endInteractionProgressLimit)));
         }
     }
 
@@ -295,4 +287,28 @@ public class StateController : SelectableObject
     {
         return (SelectedObject.transform.position - transform.position).magnitude < INTERACT_RANGE;
     }
+
+    #region RPC definitions
+    [PunRPC]
+    private void SetCharacterColorRPC(Vector3 color)
+    {
+        Material coloredMat = transform.Find("Alpha_Surface").GetComponent<Renderer>().material;
+        coloredMat.color = new Color(color.x, color.y, color.z);
+    }
+
+    [PunRPC]
+    private void SetSelectedInteractionRPC(int hash)
+    {
+        Interaction[] foundInteractions = (Interaction[])Resources.FindObjectsOfTypeAll(typeof(Interaction));
+        foreach (var interaction in foundInteractions)
+        {
+            if (interaction.CompareHash(hash))
+            {
+                _selectedInteraction = interaction;
+                return;
+            }
+        }
+        _selectedInteraction = null;
+    }
+    #endregion
 }

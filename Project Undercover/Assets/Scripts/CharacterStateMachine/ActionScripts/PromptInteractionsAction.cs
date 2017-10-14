@@ -17,7 +17,7 @@ public class PromptInteractionsAction : Action {
         }
         else
         {
-            //InteractionPanelController.Hide();
+            InteractionPanelController.ActivePanel.Hide();
         }
     }
 
