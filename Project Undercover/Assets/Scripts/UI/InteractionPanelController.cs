@@ -53,7 +53,7 @@ public class InteractionPanelController : MonoBehaviour {
             var data = new InteractionData(interaction, false);
             optionsList.Add(data);
         }
-        if (controller.SelectedObject.CompareTag("Spy"))
+        if (true || controller.SelectedObject.CompareTag("Spy"))
         {
             foreach (Interaction interaction in controller.SelectedObject.spyInteractions)
             {
