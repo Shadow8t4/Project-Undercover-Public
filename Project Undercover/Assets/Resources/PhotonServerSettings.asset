@@ -67,4 +67,6 @@ MonoBehaviour:
   - SetIsInteractingRPC
   - SetSelectedInteractionRPC
   - SetCharacterColorRPC
+  - ShowWinScreen
+  - CaughtSpy
   DisableAutoOpenWizard: 1

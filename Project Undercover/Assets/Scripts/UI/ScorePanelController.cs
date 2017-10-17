@@ -6,15 +6,11 @@ using UnityEngine.UI;
 
 public class ScorePanelController : Photon.PunBehaviour {
 
-    public Text _timerText, winText;
+    public Text _timerText;
     public Image _guardScore, _spyScore;
-    public Text missionsCompleteText;
-    public GameObject winPanel;
-    public GameObject guardPanel;
-    public GameObject spyPanel;
 
-    private int _numOfMissions = 3;
-    private int _missionsComplete = 0;
+    private int _numOfMissions = 3, _maxGuardPoints = 3;
+    private int _missionsComplete = 0, _numGuardPoints = 0;
     private float waitBetweenMissions = 5.0f;
     private bool onMissionCooldown = false;
 
@@ -83,6 +79,11 @@ public class ScorePanelController : Photon.PunBehaviour {
         }
         StopCoroutine(flashCoroutine);
         StartCoroutine(ResetScoreBarColor(scoreBar, originalColor));
+        if (_numGuardPoints >= _maxGuardPoints)
+            photonView.RPC("ShowWinScreen", PhotonTargets.All, true);
+        else if (_missionsComplete >= _numOfMissions)
+            photonView.RPC("ShowWinScreen", PhotonTargets.All, false);
+
         yield return null;
     }
 
@@ -154,22 +155,21 @@ public class ScorePanelController : Photon.PunBehaviour {
         _missionsComplete++;
         StartCoroutine(MissionCooldown());
         StartCoroutine(IncreaseScoreBarAnimation(_spyScore, (float)_missionsComplete / _numOfMissions));
-        /*if (_missionsComplete >= _numOfMissions)
-            photonView.RPC("ShowSpiesWinScreen", PhotonTargets.All);*/
     }
 
     [PunRPC]
-    void ShowSpiesWinScreen()
+    void CaughtSpy()
     {
-        winPanel.SetActive(true);
-        winText.text = "SPIES WIN!";
+        Debug.Log("Spy Caught!");
+        _numGuardPoints++;
+        StartCoroutine(MissionCooldown());
+        StartCoroutine(IncreaseScoreBarAnimation(_spyScore, (float)_missionsComplete / _numOfMissions));
     }
 
     [PunRPC]
-    void ShowGuardsWinScreen()
+    void ShowWinScreen(bool guardsOrSpies)
     {
-        winPanel.SetActive(true);
-        winText.text = "GUARDS WIN!";
+        WinAnimationController.ActiveController.PlayWinAnimation(guardsOrSpies);
     }
     #endregion
 

@@ -8,13 +8,12 @@ using UnityEngine.UI;
 public class WinAnimationController : MonoBehaviour {
 
     [SerializeField]
-    private Image _spySprite, _guardSprite, _starSprite;
+    private Image _spySprite, _guardSprite, _starSprite, _backgroundPanel;
 
     [SerializeField]
     private Text _winText;
 
-    [SerializeField]
-    private Image _winAnimationPanel;
+    private static WinAnimationController _controller;
 
     delegate T GetDelegate<T>();
     delegate void SetDelegate<T>(T value);
@@ -29,12 +28,49 @@ public class WinAnimationController : MonoBehaviour {
         }
     }
 
-    void Start () {
-        StartCoroutine(WinAnimation(false));	
-	}
+    private void Awake()
+    {
+        ActiveController = this;
+    }
+
+    public void PlayWinAnimation(bool guardsOrSpies)
+    {
+        StartCoroutine(WinAnimation(guardsOrSpies));
+    }
+
+    private void SetActive(bool active)
+    {
+        _spySprite.gameObject.SetActive(active);
+        _guardSprite.gameObject.SetActive(active);
+        _starSprite.gameObject.SetActive(active);
+        _winText.gameObject.SetActive(active);
+        _backgroundPanel.gameObject.SetActive(active);
+    }
+
+    public static WinAnimationController ActiveController
+    {
+        get
+        {
+            if (_controller)
+                return _controller;
+            else
+            {
+                Debug.LogError("There is no WinAnimationController in the scene");
+                return null;
+            }
+        }
+        set
+        {
+            if (!_controller)
+                _controller = value;
+            else
+                Debug.LogError("There is no WinAnimationController in the scene");
+        }
+    }
 
     IEnumerator WinAnimation(bool guardsOrSpies)
     {
+        SetActive(true);
         _winText.gameObject.SetActive(true);
         _starSprite.gameObject.SetActive(true);
         RectTransform winnerTrans = _guardSprite.rectTransform;
@@ -119,12 +155,12 @@ public class WinAnimationController : MonoBehaviour {
         float limit = 0.5f;
         while (time < limit)
         {
-            _winAnimationPanel.color = new Color(0, 0, 0, time);
+            _backgroundPanel.color = new Color(0, 0, 0, time);
             float elapsedTime = Time.deltaTime * speed;
             time += elapsedTime;
             yield return new WaitForEndOfFrame();
         }
-        _winAnimationPanel.color = new Color(0, 0, 0, limit);
+        _backgroundPanel.color = new Color(0, 0, 0, limit);
         yield return null;
     }
 
