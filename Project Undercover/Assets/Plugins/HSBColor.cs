@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [System.Serializable]
-public struct HSBColor
+public struct HSBColor : IEquatable<HSBColor>
 {
     public float h;
     public float s;
@@ -220,5 +221,10 @@ public struct HSBColor
         Debug.Log("0.4, 1f, 0.84: " + color);
 
         Debug.Log("164,82,84   .... 0.643137f, 0.321568f, 0.329411f  :" + ToColor(new HSBColor(new Color(0.643137f, 0.321568f, 0.329411f))));
+    }
+
+    public bool Equals(HSBColor other)
+    {
+        return Mathf.Abs((h - other.h)) < 0.01f && Mathf.Abs((s - other.s)) < 0.01f && Mathf.Abs((b - other.b)) < 0.01f && Mathf.Abs((a - other.a)) < 0.01f;    
     }
 }

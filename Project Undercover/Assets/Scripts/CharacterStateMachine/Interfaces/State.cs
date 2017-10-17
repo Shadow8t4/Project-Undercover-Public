@@ -48,6 +48,7 @@ public class State : ScriptableObject
             if (decisionSucceeded)
             {
                 controller.TransitionToState(transitions[i].trueState);
+                break;
             }
         }
     }
