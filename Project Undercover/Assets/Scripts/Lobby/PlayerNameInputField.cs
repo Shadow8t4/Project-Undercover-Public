@@ -1,10 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-
-using System.Collections;
-
-
 namespace Com.MyCompany.MyGame
 {
     [RequireComponent(typeof(InputField))]

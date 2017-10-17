@@ -67,4 +67,7 @@ MonoBehaviour:
   - SetIsInteractingRPC
   - SetSelectedInteractionRPC
   - SetCharacterColorRPC
+  - SetOwner
+  - AddPlayer
+  - RemovePlayer
   DisableAutoOpenWizard: 1

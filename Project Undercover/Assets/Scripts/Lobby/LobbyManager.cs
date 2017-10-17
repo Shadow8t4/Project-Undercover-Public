@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -40,7 +38,7 @@ public class LobbyManager : Photon.PunBehaviour {
     public void StartGame()
     {
         if (PhotonNetwork.isMasterClient)
-            PhotonNetwork.LoadLevel("NewCharactersTest");
+            PhotonNetwork.LoadLevel("GuardCameraTest");
     }
 
     public override void OnPhotonPlayerConnected(PhotonPlayer other)
