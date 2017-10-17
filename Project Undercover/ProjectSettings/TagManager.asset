@@ -8,6 +8,8 @@ TagManager:
   - GameManager
   - Spy
   - NPC
+  - GuardController
+  - GuardPanel
   layers:
   - Default
   - TransparentFX

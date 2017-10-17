@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -7,10 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Photon.PunBehaviour {
 
-    public GuardCameraController guardCamera;
+    public GameObject guardController;
     public GameObject spyPrefab, NPCPrefab, cameraRigPrefab;
     public int numNpcs = 9;
-
+    public int spyMissionsComplete = 0;
+    public float waitBetweenMissions = 5.0f;
+    public bool onMissionCooldown = false;
+    public Text missionsCompleteText;
+    public GameObject winPanel;
+    public GameObject guardPanel;
+    public GameObject spyPanel;
+    public GameObject guardCameraPanel;
+    public Text winText;
+    private int numOfMissions = 3;
 
     public override void OnLeftRoom()
     {
@@ -39,12 +47,12 @@ public class GameManager : Photon.PunBehaviour {
     {
         if (PersistantPlayerSettings.character == PersistantPlayerSettings.Character.Guard)
         {
-            guardCamera.SetCameraEnabled(guardCamera, true);
+            guardController.SetActive(true);
+            guardCameraPanel.SetActive(true);
             //guardPanel.SetActive(true);
         }
         else
         {
-            guardCamera.GetComponent<GuardCamera>().spotLight.enabled = true;
             Vector3 randPos = StateController.GetRandomLocation();
             var spy = PhotonNetwork.Instantiate(spyPrefab.name, randPos, Quaternion.identity, 0);
 

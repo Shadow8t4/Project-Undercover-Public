@@ -69,4 +69,6 @@ MonoBehaviour:
   - SetCharacterColorRPC
   - ShowWinScreen
   - CaughtSpy
+  - AddPlayer
+  - RemovePlayer
   DisableAutoOpenWizard: 1
