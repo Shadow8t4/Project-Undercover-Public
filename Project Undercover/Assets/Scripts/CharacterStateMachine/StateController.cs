@@ -88,7 +88,6 @@ public class StateController : SelectableObject
         }
     }
 
-    // Initiates interaction with other StateController
     public void InitiateInteractionWithSelectedObject()
     {
         if (SelectedObject == this)
@@ -153,7 +152,6 @@ public class StateController : SelectableObject
         return SelectedObject.Interactor != this;
     }
 
-
     public void FinishInteraction()
     {
         if (IsInteracting)
@@ -183,8 +181,6 @@ public class StateController : SelectableObject
             photonView.RPC("SetSelectedInteractionRPC", PhotonTargets.All, hash);
         }
     }
-
-
 
     public void StartRoaming()
     {

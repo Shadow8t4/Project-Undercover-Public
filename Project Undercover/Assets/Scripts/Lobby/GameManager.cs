@@ -10,15 +10,7 @@ public class GameManager : Photon.PunBehaviour {
     public GuardCameraController guardCamera;
     public GameObject spyPrefab, NPCPrefab, cameraRigPrefab;
     public int numNpcs = 9;
-    public int spyMissionsComplete = 0;
-    public float waitBetweenMissions = 5.0f;
-    public bool onMissionCooldown = false;
-    public Text missionsCompleteText;
-    public GameObject winPanel;
-    public GameObject guardPanel;
-    public GameObject spyPanel;
-    public Text winText;
-    private int numOfMissions = 3;
+
 
     public override void OnLeftRoom()
     {
@@ -69,52 +61,11 @@ public class GameManager : Photon.PunBehaviour {
 				PhotonNetwork.Instantiate(NPCPrefab.name, randPos, Quaternion.identity, 0);
             }
         }
-
-    }
-
-    public void CompleteMission()
-    {
-        if (!PhotonNetwork.isMasterClient || onMissionCooldown)
-            return;
-        StartCoroutine(MissionCooldown());
-        spyMissionsComplete++;
-        photonView.RPC("CompleteMissionRPC", PhotonTargets.All, spyMissionsComplete);
-
-        if (spyMissionsComplete >= numOfMissions)
-            photonView.RPC("ShowSpiesWinScreen", PhotonTargets.All);
-    }
-
-	[PunRPC]
-	void SpawnNPC(Vector3 pos)
-	{
-		Instantiate(NPCPrefab, pos, Quaternion.identity);
-	}
-
-    [PunRPC]
-    void CompleteMissionRPC(int missionsCompleted)
-    {
-        spyMissionsComplete = missionsCompleted;
-        missionsCompleteText.text = spyMissionsComplete + "/3";
     }
 
     [PunRPC]
-    void ShowSpiesWinScreen()
+    void SpawnNPC(Vector3 pos)
     {
-        winPanel.SetActive(true);
-        winText.text = "SPIES WIN!";
-    }
-
-    [PunRPC]
-    void ShowGuardsWinScreen()
-    {
-        winPanel.SetActive(true);
-        winText.text = "GUARDS WIN!";
-    }
-
-    IEnumerator MissionCooldown()
-    {
-        onMissionCooldown = true;
-        yield return new WaitForSeconds(waitBetweenMissions);
-        onMissionCooldown = false;
+        Instantiate(NPCPrefab, pos, Quaternion.identity);
     }
 }
