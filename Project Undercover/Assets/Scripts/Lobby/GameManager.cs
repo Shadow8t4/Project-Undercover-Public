@@ -9,7 +9,16 @@ public class GameManager : Photon.PunBehaviour {
     public GameObject guardController;
     public GameObject spyPrefab, NPCPrefab, cameraRigPrefab;
     public int numNpcs = 9;
-
+    public int spyMissionsComplete = 0;
+    public float waitBetweenMissions = 5.0f;
+    public bool onMissionCooldown = false;
+    public Text missionsCompleteText;
+    public GameObject winPanel;
+    public GameObject guardPanel;
+    public GameObject spyPanel;
+    public GameObject guardCameraPanel;
+    public Text winText;
+    private int numOfMissions = 3;
 
     public override void OnLeftRoom()
     {
