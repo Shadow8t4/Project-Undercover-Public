@@ -18,5 +18,8 @@ EditorBuildSettings:
     path: Assets/Scenes/NewCharactersTest.unity
     guid: 89e17cc55d8d66942862d86930906b5f
   - enabled: 0
-    path: Assets/Scenes/GuardCameraTest.unity
+    path: 
     guid: e6ffeb27a9cb4a244bc7c814c7346df2
+  - enabled: 1
+    path: Assets/Scenes/New Level.unity
+    guid: 0697173d1a88eb54898d2cf63ceb7c5b
