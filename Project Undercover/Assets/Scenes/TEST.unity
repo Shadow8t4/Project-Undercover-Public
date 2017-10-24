@@ -136,8 +136,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guardController: {fileID: 740274924}
-  spyPrefab: {fileID: 1736268233368836, guid: 8de347aada1dce74ca095e2694bfa639, type: 2}
-  NPCPrefab: {fileID: 1249949894527080, guid: ea4aade53c5c4714b8b9c335e8100cf0, type: 2}
+  spyPrefab: {fileID: 1947136867202616, guid: c71236ac0d1f9ef4baeb070fecff18b4, type: 2}
+  NPCPrefab: {fileID: 1804278872897102, guid: 05cc23ecb8ac4b147b123c1f3a4b4744, type: 2}
   cameraRigPrefab: {fileID: 1009033979625728, guid: 1764211b5690c164d82aa46fa4ec707d,
     type: 2}
   numNpcs: 10
@@ -1650,7 +1650,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 3}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -20}
 --- !u!1 &710257908
 GameObject:
@@ -2552,7 +2552,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1, z: 3}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &948654262
 GameObject:
@@ -2890,7 +2890,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4111428620450798, guid: 1fe566b7af92807418fa484c77758374, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1358737878885714, guid: 1fe566b7af92807418fa484c77758374, type: 2}
       propertyPath: m_Name
@@ -3152,7 +3152,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4111428620450798, guid: 1fe566b7af92807418fa484c77758374, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1fe566b7af92807418fa484c77758374, type: 2}
@@ -4642,7 +4642,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2105447052}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.03, z: 0}
   m_LocalScale: {x: 20, y: 0.1, z: 20}
   m_Children: []
   m_Father: {fileID: 0}

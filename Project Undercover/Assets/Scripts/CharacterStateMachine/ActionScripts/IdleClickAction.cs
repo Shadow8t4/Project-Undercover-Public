@@ -22,6 +22,7 @@ public class IdleClickAction : Action
     {
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
+			
             if (controller.Interactor)
             {
                 controller.Interactor = null;
@@ -56,6 +57,7 @@ public class IdleClickAction : Action
         int layerMask = LayerMask.NameToLayer("SelectableObject");
         int mask = 1 << layerMask;
         RaycastHit hit;
+		Debug.Log ("Clicking");
         if (Physics.Raycast(ray, out hit, 100.0f, mask))
         {
             SelectableObject selectable = hit.collider.gameObject.GetComponentInParent<SelectableObject>();

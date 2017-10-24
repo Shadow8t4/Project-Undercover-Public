@@ -288,7 +288,7 @@ public class StateController : SelectableObject
     [PunRPC]
     private void SetCharacterColorRPC(Vector3 color)
     {
-        Material coloredMat = transform.Find("Alpha_Surface").GetComponent<Renderer>().material;
+        Material coloredMat = transform.Find("Man_Standing").GetComponent<Renderer>().material;
         coloredMat.color = new Color(color.x, color.y, color.z);
     }
 
