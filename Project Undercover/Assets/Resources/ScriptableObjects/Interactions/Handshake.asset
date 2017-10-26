@@ -16,6 +16,6 @@ MonoBehaviour:
   initiatorAnimationTrigger: 6
   objectAnimationTrigger: 6
   result: 0
-  initialRotation: 0
+  initialRotation: 35
   objectInitialRotation: 0
-  interactionDistance: 1.2
+  interactionDistance: 1.4
