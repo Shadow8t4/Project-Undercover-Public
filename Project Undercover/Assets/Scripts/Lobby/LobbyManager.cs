@@ -38,7 +38,7 @@ public class LobbyManager : Photon.PunBehaviour {
     public void StartGame()
     {
         if (PhotonNetwork.isMasterClient)
-            PhotonNetwork.LoadLevel("NewCharactersTest");
+            PhotonNetwork.LoadLevel("Player-Object-Interactions");
     }
 
     public override void OnPhotonPlayerConnected(PhotonPlayer other)

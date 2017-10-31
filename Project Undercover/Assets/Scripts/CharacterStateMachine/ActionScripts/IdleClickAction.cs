@@ -58,6 +58,7 @@ public class IdleClickAction : Action
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100.0f, mask))
         {
+            Debug.Log("Found SelectableObject");
             SelectableObject selectable = hit.collider.gameObject.GetComponentInParent<SelectableObject>();
             if (selectable != null && selectable != controller && selectable.HasInteractions())
             {

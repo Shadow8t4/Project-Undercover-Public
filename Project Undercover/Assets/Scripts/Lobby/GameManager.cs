@@ -60,7 +60,7 @@ public class GameManager : Photon.PunBehaviour {
             cameraRig.GetComponentInChildren<ThirdPersonCameraController>().SetTarget(spy.transform);
             //spyPanel.SetActive(true);
         }
-        
+        /*
         if (PhotonNetwork.isMasterClient)
         {
 			for (int i = 0; i < numNpcs; i++)
@@ -68,7 +68,7 @@ public class GameManager : Photon.PunBehaviour {
                 Vector3 randPos = StateController.GetRandomLocation();
 				PhotonNetwork.Instantiate(NPCPrefab.name, randPos, Quaternion.identity, 0);
             }
-        }
+        }*/
     }
 
     [PunRPC]
