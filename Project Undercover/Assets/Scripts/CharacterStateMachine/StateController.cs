@@ -18,7 +18,7 @@ public class StateController : SelectableObject
     private SelectableObject _selectedObject;
     private Interaction _selectedInteraction;
     private Coroutine _roamCoroutine;
-    private static float _startInteractionProgressLimit = 0.1f;
+    private static float _startInteractionProgressLimit = 0.2f;
     private static float _endInteractionProgressLimit = 1.0f;
 
     void Awake()
