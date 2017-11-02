@@ -39,7 +39,7 @@ public class GameManager : Photon.PunBehaviour {
     }
 
     public void LeaveRoom()
-    {
+	{
         PhotonNetwork.LeaveRoom();
     }
 

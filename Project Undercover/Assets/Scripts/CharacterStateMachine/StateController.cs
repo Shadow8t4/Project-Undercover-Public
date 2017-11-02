@@ -135,7 +135,7 @@ public class StateController : SelectableObject
     public static Vector3 GetRandomLocation()
     {
         float roomSize = 10.0f;
-        var randTarget = new Vector3(roomSize - (roomSize * 2 * UnityEngine.Random.value), 0.0f, roomSize - (roomSize * 2 * UnityEngine.Random.value));
+        var randTarget = new Vector3(roomSize - (roomSize * 2 * UnityEngine.Random.value), 0.1f, roomSize - (roomSize * 2 * UnityEngine.Random.value));
         NavMeshHit hit;
         if (NavMesh.SamplePosition(randTarget, out hit, 1.0f, NavMesh.AllAreas))
             return hit.position;
