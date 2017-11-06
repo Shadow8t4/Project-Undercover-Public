@@ -75,6 +75,8 @@ public class GuardController : Photon.PunBehaviour {
     void SetCameraText()
     {
         // TODO - GuardCamera should be responsible for text.
+        // Each GuardCamera should display its name in colored text.
+        // Red denotes that it is owned by another player, Green denotes free.
         if (mInControl)
         {
             cameraStatusText.text = "In-Control";
