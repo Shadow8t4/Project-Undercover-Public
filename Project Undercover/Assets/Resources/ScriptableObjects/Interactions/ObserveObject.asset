@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionDescription: observe the object
   receiverDescription: N/A
-  initiatorAnimationTrigger: 5
+  initiatorAnimationTrigger: 2
   objectAnimationTrigger: 0
   result: 0
   initialRotation: 0
