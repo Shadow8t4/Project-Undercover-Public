@@ -11,6 +11,8 @@ public class GuardCamera : Photon.PunBehaviour {
     private float xRotation = 0.0f;
     private float yRotation = 0.0f;
 
+    private string mName;
+
     private List<int> mPlayers; // Photo Player IDs
 
     [SerializeField]
@@ -22,6 +24,9 @@ public class GuardCamera : Photon.PunBehaviour {
         mSpotlight = GetComponent<Light>();
         mCamera = GetComponent<Camera>();
         mListener = GetComponent<AudioListener>();
+
+        // Get the name of this camera.
+        mName = this.name;
 
         // Everything off by default
         mSpotlight.enabled = false;
@@ -73,6 +78,32 @@ public class GuardCamera : Photon.PunBehaviour {
 
         // Trigger removing a player from this camera.
         photonView.RPC("RemovePlayer", PhotonTargets.All, PhotonNetwork.player.ID);
+    }
+
+    /**
+     * Disable preview mode. See EnablePreviewMode().
+     */
+    public void DisablePreviewMode()
+    {
+        // Turn off the camera.
+        mCamera.enabled = false;
+
+        // Reset the viewport to original dimensions.
+        mCamera.rect = new Rect(0.0f, 0.0f, 1.0f, 1.0f);
+    }
+
+    /**
+     * Enable preview mode, which allows cameras to be viewed side-by-side
+     * like a guard screen.
+     */
+    public void EnablePreviewMode(float size, int x, int y)
+    {
+        // Turn on the camera in case it was disabled, but disable sound.
+        mCamera.enabled = true;
+        mListener.enabled = false;
+
+        // Set the viewport appropriately.
+        mCamera.rect = new Rect(size * x, size * y, size, size);
     }
 
     public bool InControl()
