@@ -20,9 +20,9 @@ public class IdleClickAction : Action
 
     public override void Act(StateController controller)
     {
+        // If the user clicks, but not on a UI object ...
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-			
             if (controller.Interactor)
             {
                 controller.Interactor = null;
@@ -30,8 +30,8 @@ public class IdleClickAction : Action
             }
             else
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 // Check first if the player clicked on a selectable object
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 SelectableObject selectableObject;
                 if (RaycastForSelectableObject(controller, ray, out selectableObject))
                 {
@@ -48,7 +48,7 @@ public class IdleClickAction : Action
 
         // If the player has selected an object, move the player toward that object
         if (controller.SelectedObject && !controller.IsInteracting)
-            controller.Destination = controller.SelectedObject.transform.position;
+            controller.MoveToSelectedObject();
     }
 
     // Check if StateController clicked on a Selectable Object
@@ -60,7 +60,11 @@ public class IdleClickAction : Action
         if (Physics.Raycast(ray, out hit, 100.0f, mask))
         {
             SelectableObject selectable = hit.collider.gameObject.GetComponentInParent<SelectableObject>();
-            if (selectable != null && selectable != controller && selectable.HasInteractions())
+            if (!selectable.HasInteractions())
+            {
+                Debug.LogError("\"" + selectable.name + "\", a SelectableObject, has no pre-defined interactions.");
+            }
+            else if (selectable != null && !selectable.Equals(controller))
             {
                 selectableObject = selectable;
                 return true;

@@ -121,6 +121,7 @@ public class StateController : SelectableObject
             }
             else
             {
+                // If _selectedObject is set to null, stop in place
                 navMeshAgent.stoppingDistance = 0.0f;
                 Destination = transform.position;
             }
@@ -269,6 +270,14 @@ public class StateController : SelectableObject
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, facingRotation, (progress - _endInteractionProgressLimit) * (1.0f / (1 - _endInteractionProgressLimit)));
         }
+    }
+
+    public void MoveToSelectedObject()
+    {
+        Vector3 awayDirection = (transform.position - SelectedObject.transform.position).normalized;
+        Vector3 newPos = SelectedObject.transform.position + awayDirection * INTERACT_RANGE * 0.8f;
+        navMeshAgent.stoppingDistance = 0.0f;
+        Destination = newPos;
     }
 
     public void MoveForSelectedObjectInteraction()
