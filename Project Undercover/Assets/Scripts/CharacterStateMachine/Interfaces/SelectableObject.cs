@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectableObject : Photon.PunBehaviour, IEquatable<SelectableObject>
+public abstract class SelectableObject : Photon.PunBehaviour, IEquatable<SelectableObject>
 {
     // PhotonView Id of interacting character
     [SerializeField]

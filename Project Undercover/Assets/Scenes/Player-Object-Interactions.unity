@@ -645,9 +645,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1145874549}
-  - component: {fileID: 1145874548}
   - component: {fileID: 1145874547}
   - component: {fileID: 1145874550}
+  - component: {fileID: 1145874548}
   m_Layer: 10
   m_Name: Statue
   m_TagString: Untagged
@@ -675,7 +675,7 @@ MonoBehaviour:
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 1145874548}
+  - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 5
   instantiationId: 5
@@ -689,14 +689,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1145874546}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b3f3e01c4d73ca439fd8977a38cf5b4, type: 3}
+  m_Script: {fileID: 11500000, guid: a2e14842720228c49bf03c30440cbcbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _queuedInteractorId: -1
   _isInteracting: 0
-  interactions:
+  interactions: []
+  spyInteractions:
   - {fileID: 11400000, guid: 80ca1bec2c07531428cf5a84624e44a4, type: 2}
-  spyInteractions: []
 --- !u!4 &1145874549
 Transform:
   m_ObjectHideFlags: 0
