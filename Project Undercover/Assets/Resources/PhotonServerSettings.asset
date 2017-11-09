@@ -73,4 +73,6 @@ MonoBehaviour:
   - RemovePlayer
   - CaughtSpyRPC
   - GuardCaughtNPCRPC
+  - ReplaceNPCWithSpyRPC
+  - ReplaceSpyRPC
   DisableAutoOpenWizard: 1

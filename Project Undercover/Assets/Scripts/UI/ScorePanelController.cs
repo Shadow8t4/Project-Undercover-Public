@@ -9,7 +9,7 @@ public class ScorePanelController : Photon.PunBehaviour {
     public Text _timerText;
     public Image _guardScore, _spyScore;
 
-    private int _numOfMissions = 3, _maxGuardPoints = 3;
+    private int _numOfMissions = 5, _maxGuardPoints = 5;
     private int _missionsComplete = 0, _numGuardPoints = 0;
     private float waitBetweenMissions = 5.0f;
     private bool onMissionCooldown = false;
@@ -34,17 +34,20 @@ public class ScorePanelController : Photon.PunBehaviour {
     {
         if (ActivePanel.onMissionCooldown)
             return;
-
         ActivePanel.photonView.RPC("CompleteMissionRPC", PhotonTargets.All);
     }
 
-    public static void CaughtSpy()
+    public static void CaughtSpy(int spyId)
     {
-        ActivePanel.photonView.RPC("CaughtSpyRPC", PhotonTargets.All);
+        if (ActivePanel.onMissionCooldown)
+            return;
+        ActivePanel.photonView.RPC("CaughtSpyRPC", PhotonTargets.All, spyId);
     }
 
     public static void GuardCaughtNPC()
     {
+        if (ActivePanel.onMissionCooldown)
+            return;
         ActivePanel.photonView.RPC("GuardCaughtNPCRPC", PhotonTargets.All);
     }
 
@@ -168,12 +171,17 @@ public class ScorePanelController : Photon.PunBehaviour {
     }
 
     [PunRPC]
-    void CaughtSpyRPC()
+    void CaughtSpyRPC(int spyId)
     {
         Debug.Log("Spy Caught!");
         _numGuardPoints++;
         StartCoroutine(MissionCooldown());
         StartCoroutine(IncreaseScoreBarAnimation(_guardScore, (float)_numGuardPoints / _maxGuardPoints));
+
+        // Get Random NPC
+        var npcs = GameManager.ActiveManager.GetNpcs();
+        int randInt = (int)(UnityEngine.Random.value * npcs.Count);
+        GameManager.ActiveManager.photonView.RPC("ReplaceNPCWithSpyRPC", PhotonTargets.All, spyId, npcs[randInt].photonView.viewID);
     }
 
     [PunRPC]
@@ -191,5 +199,4 @@ public class ScorePanelController : Photon.PunBehaviour {
         WinAnimationController.ActiveController.PlayWinAnimation(guardsOrSpies);
     }
     #endregion
-
 }

@@ -106,7 +106,7 @@ public class GuardController : Photon.PunBehaviour {
                 }
                 else if (hit.transform.gameObject.tag == "Spy")
                 {
-                    ScorePanelController.CaughtSpy();
+                    ScorePanelController.CaughtSpy(hit.transform.gameObject.GetPhotonView().viewID);
                 }
             }
         }

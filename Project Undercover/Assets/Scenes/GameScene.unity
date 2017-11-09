@@ -117,9 +117,10 @@ GameObject:
   m_Component:
   - component: {fileID: 40329370}
   - component: {fileID: 40329369}
+  - component: {fileID: 40329371}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,15 +142,7 @@ MonoBehaviour:
   cameraRigPrefab: {fileID: 1009033979625728, guid: 1764211b5690c164d82aa46fa4ec707d,
     type: 2}
   numNpcs: 10
-  spyMissionsComplete: 0
-  waitBetweenMissions: 5
-  onMissionCooldown: 0
-  missionsCompleteText: {fileID: 0}
-  winPanel: {fileID: 0}
-  guardPanel: {fileID: 0}
-  spyPanel: {fileID: 0}
   guardCameraPanel: {fileID: 164040928}
-  winText: {fileID: 0}
 --- !u!4 &40329370
 Transform:
   m_ObjectHideFlags: 0
@@ -163,6 +156,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &40329371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 40329368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents: []
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 7
+  instantiationId: 7
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!1 &81075120
 GameObject:
   m_ObjectHideFlags: 0
@@ -1229,6 +1247,10 @@ Prefab:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0bce433961afa4d488cf2e08bff4f86a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0bce433961afa4d488cf2e08bff4f86a, type: 3}
   m_IsPrefabParent: 0
@@ -1268,12 +1290,12 @@ MonoBehaviour:
   group: 0
   OwnerShipWasTransfered: 0
   prefixBackup: -1
-  synchronization: 3
+  synchronization: 0
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 284817582}
+  - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 6
   instantiationId: 6
@@ -1444,6 +1466,10 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: cc86ddd814bb12f43b57ded5958a2dd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cc86ddd814bb12f43b57ded5958a2dd6, type: 3}
   m_IsPrefabParent: 0
@@ -1483,12 +1509,12 @@ MonoBehaviour:
   group: 0
   OwnerShipWasTransfered: 0
   prefixBackup: -1
-  synchronization: 3
+  synchronization: 0
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 316942571}
+  - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 5
   instantiationId: 5

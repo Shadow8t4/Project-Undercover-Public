@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Colors/NpcColors")]
 public static class NpcColors {
 
     private static List<int> remainingIndices;

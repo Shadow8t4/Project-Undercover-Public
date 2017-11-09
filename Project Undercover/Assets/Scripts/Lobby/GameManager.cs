@@ -2,23 +2,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using System.Collections.Generic;
 
 public class GameManager : Photon.PunBehaviour {
 
     public GameObject guardController;
     public GameObject spyPrefab, NPCPrefab, cameraRigPrefab;
     public int numNpcs = 9;
-    public int spyMissionsComplete = 0;
-    public float waitBetweenMissions = 5.0f;
-    public bool onMissionCooldown = false;
-    public Text missionsCompleteText;
-    public GameObject winPanel;
-    public GameObject guardPanel;
-    public GameObject spyPanel;
     public GameObject guardCameraPanel;
-    public Text winText;
-    private int numOfMissions = 3;
+    private static GameManager _activeManager = null;
 
     public override void OnLeftRoom()
     {
@@ -43,8 +35,21 @@ public class GameManager : Photon.PunBehaviour {
         PhotonNetwork.LeaveRoom();
     }
 
+    public static GameManager ActiveManager
+    {
+        get
+        {
+            return _activeManager;
+        }
+    }
+
     void Start()
     {
+        if (_activeManager == null)
+            _activeManager = this;
+        else
+            Debug.LogError("More than one game manager in the scene!");
+
         if (PersistantPlayerSettings.character == PersistantPlayerSettings.Character.Guard)
         {
             guardController.SetActive(true);
@@ -71,9 +76,33 @@ public class GameManager : Photon.PunBehaviour {
         }
     }
 
-    [PunRPC]
-    void SpawnNPC(Vector3 pos)
+    public List<StateController> GetNpcs()
     {
-        Instantiate(NPCPrefab, pos, Quaternion.identity);
+        var npcList = new List<StateController>();
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("NPC"))
+        {
+            npcList.Add(obj.GetComponent<StateController>());
+        }
+        return npcList;
+    }
+
+    [PunRPC]
+    void ReplaceNPCWithSpyRPC(int spyId, int npcId)
+    {
+        var randNPC = PhotonView.Find(npcId);
+
+        // Replace NPC with Spy
+        PhotonView spyView = PhotonView.Find(spyId);
+        if (spyView && spyView.isMine)
+        {
+            PhotonNetwork.Destroy(spyView.gameObject);
+            var spy = PhotonNetwork.Instantiate(spyPrefab.name, randNPC.transform.position, randNPC.transform.rotation, 0);
+            GameObject cameraRig = GameObject.FindGameObjectWithTag("CameraRig");
+            cameraRig.GetComponentInChildren<ThirdPersonCameraController>().SetTarget(spy.transform);
+        }
+        if (PhotonNetwork.isMasterClient)
+        {
+            PhotonNetwork.Destroy(randNPC.gameObject);
+        }
     }
 }
