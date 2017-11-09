@@ -11,7 +11,7 @@ public class NpcApproachingTargetAction : Action
 
     public override void Act(StateController controller)
     {
-        controller.Destination = controller.SelectedObject.transform.position;
+        controller.MoveToSelectedObject();
     }
 
     public override void EndAct(StateController controller)

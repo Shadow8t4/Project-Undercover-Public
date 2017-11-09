@@ -129,11 +129,10 @@ public abstract class SelectableObject : Photon.PunBehaviour, IEquatable<Selecta
 
     private void OnMouseEnter()
     {
-        if (!isSpy)
+        if (!isSpy || !photonView.isMine)
+        {
             isMousedOver = true;
-        else if (!photonView.isMine)
-            isMousedOver = true;
-
+        }
     }
 
     private void OnMouseExit()

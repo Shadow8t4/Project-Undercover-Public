@@ -3,14 +3,18 @@ using UnityEngine;
 
 public class GuardCamera : Photon.PunBehaviour {
 
+    public Camera mCamera;
+
     private Light mSpotlight;
-    private Camera mCamera;
     private AudioListener mListener;
 
     private float xRotation = 0.0f;
     private float yRotation = 0.0f;
 
     private List<int> mPlayers; // Photo Player IDs
+
+    [SerializeField]
+    private GameObject glowPrePassCamera;
 
     void Start()
     {
@@ -47,6 +51,9 @@ public class GuardCamera : Photon.PunBehaviour {
         // Turn on this camera for the player.
         mCamera.enabled = true;
         mListener.enabled = true;
+        glowPrePassCamera.GetComponent<Camera>().enabled = true;
+        glowPrePassCamera.GetComponent<GlowPrePass>().enabled = true;
+        GetComponent<GlowComposite>().enabled = true;
 
         // Trigger adding a player to this camera.
         photonView.RPC("AddPlayer", PhotonTargets.All, PhotonNetwork.player.ID);
@@ -60,6 +67,9 @@ public class GuardCamera : Photon.PunBehaviour {
         // Turn off this camera for the player.
         mCamera.enabled = false;
         mListener.enabled = false;
+        glowPrePassCamera.GetComponent<Camera>().enabled = false;
+        glowPrePassCamera.GetComponent<GlowPrePass>().enabled = false;
+        GetComponent<GlowComposite>().enabled = false;
 
         // Trigger removing a player from this camera.
         photonView.RPC("RemovePlayer", PhotonTargets.All, PhotonNetwork.player.ID);

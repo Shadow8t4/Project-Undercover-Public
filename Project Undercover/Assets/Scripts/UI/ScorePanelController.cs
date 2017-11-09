@@ -38,6 +38,16 @@ public class ScorePanelController : Photon.PunBehaviour {
         ActivePanel.photonView.RPC("CompleteMissionRPC", PhotonTargets.All);
     }
 
+    public static void CaughtSpy()
+    {
+        ActivePanel.photonView.RPC("CaughtSpyRPC", PhotonTargets.All);
+    }
+
+    public static void GuardCaughtNPC()
+    {
+        ActivePanel.photonView.RPC("GuardCaughtNPCRPC", PhotonTargets.All);
+    }
+
     #region Coroutines
     IEnumerator TimerUpdate()
     {
@@ -158,10 +168,19 @@ public class ScorePanelController : Photon.PunBehaviour {
     }
 
     [PunRPC]
-    void CaughtSpy()
+    void CaughtSpyRPC()
     {
         Debug.Log("Spy Caught!");
         _numGuardPoints++;
+        StartCoroutine(MissionCooldown());
+        StartCoroutine(IncreaseScoreBarAnimation(_guardScore, (float)_numGuardPoints / _maxGuardPoints));
+    }
+
+    [PunRPC]
+    void GuardCaughtNPCRPC()
+    {
+        Debug.Log("Guard caught an NPC! Giving points to spies!");
+        _missionsComplete++;
         StartCoroutine(MissionCooldown());
         StartCoroutine(IncreaseScoreBarAnimation(_spyScore, (float)_missionsComplete / _numOfMissions));
     }

@@ -71,4 +71,6 @@ MonoBehaviour:
   - CaughtSpy
   - AddPlayer
   - RemovePlayer
+  - CaughtSpyRPC
+  - GuardCaughtNPCRPC
   DisableAutoOpenWizard: 1

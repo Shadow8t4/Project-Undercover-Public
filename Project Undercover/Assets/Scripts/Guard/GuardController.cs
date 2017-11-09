@@ -73,7 +73,12 @@ public class GuardController : Photon.PunBehaviour {
         SetCameraText();
     }
 
-	void Update()
+    GuardCamera GetCurrentGuardCamera()
+    {
+        return mCameras[mCurrentCamera];
+    }
+
+    void Update()
     {
         if (Input.GetKeyDown("space") || mCurrentCamera == -1)
         {
@@ -88,25 +93,23 @@ public class GuardController : Photon.PunBehaviour {
             SetCameraText();
         }
 
-        /*RaycastHit hit;
         if (Input.GetButtonDown("Fire1"))
         {
-            Ray ray = GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            Ray ray = GetCurrentGuardCamera().mCamera.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit, 100.0f))
             {
                 if (hit.transform.gameObject.tag == "NPC")
                 {
-                    var manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-                    manager.photonView.RPC("ShowSpiesWinScreen", PhotonTargets.All);
+                    ScorePanelController.GuardCaughtNPC();
                 }
                 else if (hit.transform.gameObject.tag == "Spy")
                 {
-                    var manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-                    manager.photonView.RPC("ShowGuardsWinScreen", PhotonTargets.All);
+                    ScorePanelController.CaughtSpy();
                 }
             }
-        }*/
+        }
 
         if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
         {
@@ -115,6 +118,6 @@ public class GuardController : Photon.PunBehaviour {
 
         float xRotation = Time.deltaTime * Input.GetAxis("Horizontal") * CAMERA_SENSITIVITY;
         float yRotation = Time.deltaTime * -Input.GetAxis("Vertical") * CAMERA_SENSITIVITY;
-        mCameras[mCurrentCamera].Rotate(xRotation, yRotation);
+        GetCurrentGuardCamera().Rotate(xRotation, yRotation);
 	}
 }
