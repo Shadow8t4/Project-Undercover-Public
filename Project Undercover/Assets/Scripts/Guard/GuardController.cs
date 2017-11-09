@@ -6,14 +6,14 @@ public class GuardController : Photon.PunBehaviour {
 
     public Text cameraStatusText;
 
-	const float CAMERA_SENSITIVITY = 120.0f;
+    const float CAMERA_SENSITIVITY = 120.0f;
 
     private int mCurrentCamera; // -1 means preview mode
     private List<GuardCamera> mCameras;
 
     private bool mInControl;
 
-	void Start()
+    void Start()
     {
         // Fetch all cameras
         mCameras = new List<GuardCamera>();
@@ -127,7 +127,7 @@ public class GuardController : Photon.PunBehaviour {
         {
             UpdateSingle();
         }
-	}
+    }
 
     void UpdatePreviewMode()
     {
@@ -205,5 +205,5 @@ public class GuardController : Photon.PunBehaviour {
         float xRotation = Time.deltaTime * Input.GetAxis("Horizontal") * CAMERA_SENSITIVITY;
         float yRotation = Time.deltaTime * -Input.GetAxis("Vertical") * CAMERA_SENSITIVITY;
         GetCurrentGuardCamera().Rotate(xRotation, yRotation);
-	}
+    }
 }
