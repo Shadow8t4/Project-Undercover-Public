@@ -6,14 +6,14 @@ public class GuardController : Photon.PunBehaviour {
 
     public Text cameraStatusText;
 
-	const float CAMERA_SENSITIVITY = 120.0f;
+    const float CAMERA_SENSITIVITY = 120.0f;
 
-    private int mCurrentCamera;
+    private int mCurrentCamera; // -1 means preview mode
     private List<GuardCamera> mCameras;
 
     private bool mInControl;
 
-	void Start()
+    void Start()
     {
         // Fetch all cameras
         mCameras = new List<GuardCamera>();
@@ -26,10 +26,47 @@ public class GuardController : Photon.PunBehaviour {
             }
         }
 
-        // Default is no camera. First to get it in Update wins.
-        // Photon doesn't seem to sync camera players until update,
-        // so if we Activate() here, it won't lock.
+        // Default is preview mode.
         mCurrentCamera = -1;
+        EnablePreviewMode();
+    }
+
+    /**
+     * Disable preview mode on all cameras.
+     */
+    void DisablePreviewMode()
+    {
+        if (mCurrentCamera >= 0)
+        {
+            return;
+        }
+        foreach (var guardCamera in mCameras)
+        {
+            guardCamera.DisablePreviewMode();
+        }
+    }
+
+    /**
+     * Enable preview mode on call cameras and position them appropriately.
+     */
+    void EnablePreviewMode()
+    {
+        // Deactivate current camera, if necessary.
+        if (mCurrentCamera != -1)
+        {
+            mCameras[mCurrentCamera].Deactivate();
+        }
+        mCurrentCamera = -1;
+
+        // Cameras are always arranged in ZxZ rows and columns. Determine Z.
+        int z = (int) Mathf.Ceil(Mathf.Sqrt(mCameras.Count));
+        float size = 1.0f / z;
+
+        // Set all cameras to preview mode appropriately.
+        for (int i = 0; i < mCameras.Count; ++i)
+        {
+            mCameras[i].EnablePreviewMode(size, i % z, i / z);
+        }
     }
 
     /**
@@ -37,6 +74,9 @@ public class GuardController : Photon.PunBehaviour {
      */
     void SetCameraText()
     {
+        // TODO - GuardCamera should be responsible for text.
+        // Each GuardCamera should display its name in colored text.
+        // Red denotes that it is owned by another player, Green denotes free.
         if (mInControl)
         {
             cameraStatusText.text = "In-Control";
@@ -48,14 +88,13 @@ public class GuardController : Photon.PunBehaviour {
     }
 
     /**
-     * Cycle the player to the next camera, or grab the first camera
-     * if we don't have one yet.
+     * Cycle the player to a specific camera, or just the next one.
      */
-    void SwitchCamera()
+    void SwitchCamera(int nextCamera = -1)
     {
         // Get relevant camera indexes
         int lastCamera = mCurrentCamera;
-        mCurrentCamera += 1;
+        mCurrentCamera = nextCamera == -1 ? mCurrentCamera + 1 : nextCamera;
         if (mCurrentCamera >= mCameras.Count)
         {
             mCurrentCamera = 0;
@@ -80,7 +119,54 @@ public class GuardController : Photon.PunBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown("space") || mCurrentCamera == -1)
+        if (mCurrentCamera < 0)
+        {
+            UpdatePreviewMode();
+        }
+        else
+        {
+            UpdateSingle();
+        }
+    }
+
+    void UpdatePreviewMode()
+    {
+        // If the player clicks a camera, switch to that camera.
+        if (Input.GetButtonDown("Fire1"))
+        {
+            // Get the click location.
+            float x = Input.mousePosition.x / Screen.width;
+            float y = Input.mousePosition.y / Screen.height;
+
+            // Cameras are always arranged in ZxZ rows and columns. Determine Z.
+            int z = (int)Mathf.Ceil(Mathf.Sqrt(mCameras.Count));
+            float size = 1.0f / z;
+
+            // Determine the camera that the click corresponds to, if any.
+            int tileX = (int) (x / size);
+            int tileY = (int) (y / size);
+            int camera = tileY * z + tileX;
+
+            // If the camera is valid, switch to it.
+            if (camera < mCameras.Count)
+            {
+                DisablePreviewMode();
+                SwitchCamera(camera);
+            }
+        }
+    }
+
+    void UpdateSingle()
+    {
+        // Escape switches to Preview Mode.
+        if (Input.GetKeyDown("escape"))
+        {
+            EnablePreviewMode();
+            return;
+        }
+
+        // Space switches to next camera.
+        if (Input.GetKeyDown("space"))
         {
             SwitchCamera();
         }
@@ -119,5 +205,5 @@ public class GuardController : Photon.PunBehaviour {
         float xRotation = Time.deltaTime * Input.GetAxis("Horizontal") * CAMERA_SENSITIVITY;
         float yRotation = Time.deltaTime * -Input.GetAxis("Vertical") * CAMERA_SENSITIVITY;
         GetCurrentGuardCamera().Rotate(xRotation, yRotation);
-	}
+    }
 }

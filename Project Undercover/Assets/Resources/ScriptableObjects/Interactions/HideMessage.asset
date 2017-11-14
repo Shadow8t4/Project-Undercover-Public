@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionDescription: hide a secret message
   receiverDescription: N/A
-  initiatorAnimationTrigger: 2
+  initiatorAnimationTrigger: 9
   objectAnimationTrigger: 0
   result: 1
   initialRotation: 0
