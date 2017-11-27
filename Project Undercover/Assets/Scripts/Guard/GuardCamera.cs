@@ -1,10 +1,22 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GuardCamera : Photon.PunBehaviour {
 
-    public Camera mCamera;
+    const string AVAILABLE_TEXT = "(Available)";
+    const string IN_CONTROL_TEXT = "(In-Control)";
+    const string LOCKED_TEXT = "(Locked)";
 
+    Color AVAILABLE_COLOR = Color.black;
+    Color IN_CONTROL_COLOR = Color.black;
+    Color LOCKED_COLOR = Color.red;
+
+    public Text cameraStatusText;
+    
+    public Camera Camera { get { return mCamera; } }
+
+    private Camera mCamera;
     private Light mSpotlight;
     private AudioListener mListener;
 
@@ -39,6 +51,9 @@ public class GuardCamera : Photon.PunBehaviour {
 
         // Initialize empty player queue
         mPlayers = new List<int>();
+
+        // Set the camera status text/color.
+        UpdateCameraText();
     }
 	
 	void Update()
@@ -138,6 +153,32 @@ public class GuardCamera : Photon.PunBehaviour {
         photonView.RPC("UpdateRotation", PhotonTargets.Others, this.xRotation, this.yRotation);
     }
 
+    /**
+    * Set the text in the bottom-right corner, denoting the lock-status of the Camera.
+    */
+    void UpdateCameraText()
+    {
+        // First set the camera name
+        cameraStatusText.text = this.gameObject.name + "\n";
+
+        // Then set the status text
+        if (mPlayers.Count == 0)
+        {
+            cameraStatusText.text += AVAILABLE_TEXT;
+            cameraStatusText.color = AVAILABLE_COLOR;
+        }
+        else if (InControl())
+        {
+            cameraStatusText.text += IN_CONTROL_TEXT;
+            cameraStatusText.color = IN_CONTROL_COLOR;
+        }
+        else
+        {
+            cameraStatusText.text += LOCKED_TEXT;
+            cameraStatusText.color = LOCKED_COLOR;
+        }
+    }
+
     /*
      * Called via RPC to add a player to this camera.
      */
@@ -149,6 +190,9 @@ public class GuardCamera : Photon.PunBehaviour {
 
         // Because there is now a player, make sure the spotlight is on.
         mSpotlight.enabled = true;
+
+        // Update camera text as necessary.
+        UpdateCameraText();
     }
 
     /*
@@ -165,6 +209,9 @@ public class GuardCamera : Photon.PunBehaviour {
         {
             mSpotlight.enabled = false;
         }
+
+        // Update camera text as necessary.
+        UpdateCameraText();
     }
 
     /**

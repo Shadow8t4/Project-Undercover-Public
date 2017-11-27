@@ -4,8 +4,6 @@ using UnityEngine.UI;
 
 public class GuardController : Photon.PunBehaviour {
 
-    public Text cameraStatusText;
-
     const float CAMERA_SENSITIVITY = 120.0f;
 
     private int mCurrentCamera; // -1 means preview mode
@@ -70,24 +68,6 @@ public class GuardController : Photon.PunBehaviour {
     }
 
     /**
-     * Set the text in the bottom-right corner, denoting if the camera is locked.
-     */
-    void SetCameraText()
-    {
-        // TODO - GuardCamera should be responsible for text.
-        // Each GuardCamera should display its name in colored text.
-        // Red denotes that it is owned by another player, Green denotes free.
-        if (mInControl)
-        {
-            cameraStatusText.text = "In-Control";
-        }
-        else
-        {
-            cameraStatusText.text = "Locked";
-        }
-    }
-
-    /**
      * Cycle the player to a specific camera, or just the next one.
      */
     void SwitchCamera(int nextCamera = -1)
@@ -109,7 +89,6 @@ public class GuardController : Photon.PunBehaviour {
 
         // Determine if we are in control.
         mInControl = mCameras[mCurrentCamera].InControl();
-        SetCameraText();
     }
 
     GuardCamera GetCurrentGuardCamera()
@@ -176,13 +155,12 @@ public class GuardController : Photon.PunBehaviour {
         if (newInControl != mInControl)
         {
             mInControl = newInControl;
-            SetCameraText();
         }
 
         if (Input.GetButtonDown("Fire1"))
         {
             RaycastHit hit;
-            Ray ray = GetCurrentGuardCamera().mCamera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = GetCurrentGuardCamera().Camera.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit, 100.0f))
             {

@@ -9,7 +9,6 @@ public class GameManager : Photon.PunBehaviour {
     public GameObject guardController;
     public GameObject spyPrefab, NPCPrefab, cameraRigPrefab;
     public int numNpcs = 9;
-    public GameObject guardCameraPanel;
     private static GameManager _activeManager = null;
 
     public override void OnLeftRoom()
@@ -53,7 +52,6 @@ public class GameManager : Photon.PunBehaviour {
         if (PersistantPlayerSettings.character == PersistantPlayerSettings.Character.Guard)
         {
             guardController.SetActive(true);
-            guardCameraPanel.SetActive(true);
             //guardPanel.SetActive(true);
         }
         else
