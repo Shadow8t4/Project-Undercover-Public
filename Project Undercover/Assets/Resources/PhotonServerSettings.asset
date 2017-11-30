@@ -77,4 +77,5 @@ MonoBehaviour:
   - ReplaceSpyRPC
   - CaughtAgentRPC
   - CaughtIncorrectRPC
+  - TransferNPCToPlayer
   DisableAutoOpenWizard: 1

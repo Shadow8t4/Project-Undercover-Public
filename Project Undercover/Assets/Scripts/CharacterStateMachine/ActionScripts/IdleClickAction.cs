@@ -16,6 +16,8 @@ public class IdleClickAction : Action
         controller.Interactor = null;
         controller.SelectedObject = null;
         controller.characterAnimator.SetBool(CharacterAnimator.Params.Interacting, false);
+        if (controller.photonView.isMine)
+            controller.navMeshAgent.updateRotation = true;
     }
 
     public override void Act(StateController controller)

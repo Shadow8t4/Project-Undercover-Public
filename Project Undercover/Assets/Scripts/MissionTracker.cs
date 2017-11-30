@@ -254,7 +254,8 @@ public class MissionTracker : Photon.PunBehaviour
         // Get Random NPC
         var npcs = GameManager.ActiveManager.GetNpcs();
         int randInt = (int)(UnityEngine.Random.value * npcs.Count);
-        GameManager.ActiveManager.photonView.RPC("ReplaceNPCWithSpyRPC", PhotonTargets.All, spyId, npcs[randInt].photonView.viewID);
+        if (PhotonNetwork.isMasterClient)
+            GameManager.ActiveManager.photonView.RPC("ReplaceNPCWithSpyRPC", PhotonTargets.All, spyId, npcs[randInt].photonView.viewID);
     }
 
     [PunRPC]

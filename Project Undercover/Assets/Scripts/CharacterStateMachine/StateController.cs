@@ -24,11 +24,9 @@ public class StateController : SelectableObject
     void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
         if (!photonView.isMine)
-        {
-            navMeshAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
             navMeshAgent.updateRotation = false;
-        }
         animator = GetComponent<Animator>();
         characterAnimator = GetComponent<CharacterAnimator>();
         if (PhotonNetwork.isMasterClient)
@@ -190,7 +188,8 @@ public class StateController : SelectableObject
 
     public void StopRoaming()
     {
-        StopCoroutine(_roamCoroutine);
+        if (_roamCoroutine != null)
+            StopCoroutine(_roamCoroutine);
     }
 
     private IEnumerator Roam()
