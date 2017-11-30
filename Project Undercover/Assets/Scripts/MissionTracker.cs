@@ -129,12 +129,12 @@ public class MissionTracker : Photon.PunBehaviour
         mGuardPoints = 0;
         mGuardIncorrectGuesses = 0;
 
-        mMissionLog["statue_swap"] = new Mission(
+        /*mMissionLog["statue_swap"] = new Mission(
             "statue_swap",
             "Replace the marked statue with a bugged replica.",
             "We're picking up some electromagnetic interference. " +
             "Enemy forces have planted listening devices somewhere on the premises!"
-        );
+        );*/
 
         mMissionLog["HideMessage"] = new Mission(
             "book_message",
