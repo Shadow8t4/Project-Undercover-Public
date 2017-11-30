@@ -8,10 +8,28 @@ public class MissionTracker : Photon.PunBehaviour
     const string COMPLETED_TEXT = "(COMPLETED) ";
     const string MISSION_LOG_TEXT = "Mission Log: _";
 
+    const string GUARD_MISSION_STATEMENT =
+        "Greetings, Overseer,\n\n" +
+        "You are tasked with ensuring the security of this peace summit. We know that " +
+        "various foreign forces are determined to undermine our progress here, but you " +
+        "must make sure they do not succeed. Several enemies of the state will most " +
+        "likely be infiltrating the party tonight, and it is your task to watch for " +
+        "suspicious behavior and arrest these agents.\n\n" +
+        "The security of our great nation rests in your hands. Good luck.";
+
+    const string SPY_MISSION_STATEMENT =
+        "Greetings, Agent,\n\n" +
+        "You are tasked with infiltrating the party of Tel Nikiri, the tyrant dictator of " +
+        "the nation Rhaedoria. Once there, you must perform several covert operations to " +
+        "destabilize the political climate enough to bring freedom to this oppressed country.\n\n" +
+        "As always, should you be caught or killed, the Secretary will disavow any knowledge " +
+        "of your actions. Good luck.";
+
     const int MAX_GUARD_POINTS = 5;
 
     const float GUARD_NOTIFICATION_DELAY = 5.0f;
     const float GUARD_NOTIFICATION_TIME = 10.0f;
+    const float MISSION_NOTIFICATION_TIME = 20.0f;
 
     private static MissionTracker mSingleton;
 
@@ -118,26 +136,26 @@ public class MissionTracker : Photon.PunBehaviour
             "Enemy forces have planted listening devices somewhere on the premises!"
         );
 
-        mMissionLog["book_message"] = new Mission(
+        mMissionLog["HideMessage"] = new Mission(
             "book_message",
             "Plant critical intelligence in the designated book.",
             "One of the staff saw someone suspicious over by the bookcases. " +
             "The enemy moves among us."
         );
 
-        mMissionLog["bathroom_kill"] = new Mission(
+        /*mMissionLog["bathroom_kill"] = new Mission(
             "bathroom_kill",
             "Assassinate Knight-Captain Brystol in the bathroom.",
             "Our men found Knight-Captain Brystol dead in the bathroom. " +
             "The enemy must be stopped!"
-        );
+        );*/
 
-        mMissionLog["npc_dance"] = new Mission(
+        /*mMissionLog["npc_dance"] = new Mission(
             "npc_dance",
             "Dance with Duchess Castra to distract her momentarily.",
             "The peace talks progress poorly. Duchess Castra keeps getting distracted on the dance floor. " +
             "Could this be a strategy of our enemies?"
-        );
+        );*/
 
         mMissionLog["TellSecret"] = new Mission(
             "pass_secret",
@@ -146,16 +164,16 @@ public class MissionTracker : Photon.PunBehaviour
             "Enemy infiltrators abound."
         );
 
-        mMissionLog["spike_punch"] = new Mission(
+        /*mMissionLog["spike_punch"] = new Mission(
             "spike_punch",
             "Lower the inhibitions of those in attendance by spiking the punch.",
             "Several of our guests have become extremely intoxicated. Our catering staff insist " +
             "that the punch was non-alcoholic, so we have determined that this must be the plot of " +
             "enemy agents."
-        );
+        );*/
 
         UpdateMissionLog();
-        StartCoroutine(DisplayNotification("Be on the lookout for enemy agents..."));
+        StartCoroutine(DisplayMission());
     }
 
     /**
@@ -177,6 +195,27 @@ public class MissionTracker : Photon.PunBehaviour
     }
 
     #region coroutines
+    IEnumerator DisplayMission()
+    {
+        // pause for two seconds
+        yield return new WaitForSeconds(1.0f);
+
+        // set the mission text and render
+        if (IsGuard)
+        {
+            guardNotificationText.text = GUARD_MISSION_STATEMENT;
+        }
+        else
+        {
+            guardNotificationText.text = SPY_MISSION_STATEMENT;
+        }
+        guardNotificationPanel.SetActive(true);
+
+        // hide the panel after a certain amount of time
+        yield return new WaitForSeconds(MISSION_NOTIFICATION_TIME);
+        guardNotificationPanel.SetActive(false);
+    }
+
     IEnumerator DisplayNotification(string text)
     {
         // only display for guards...
