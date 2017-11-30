@@ -23,6 +23,8 @@ public class IdleClickAction : Action
     public override void Act(StateController controller)
     {
         // If the user clicks, but not on a UI object ...
+        if (EventSystem.current.IsPointerOverGameObject())
+            Debug.Log("Clicking on UI element");
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             if (controller.Interactor)
