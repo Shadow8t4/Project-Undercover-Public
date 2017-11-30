@@ -23,8 +23,6 @@ public class GuardCamera : Photon.PunBehaviour {
     private float xRotation = 0.0f;
     private float yRotation = 0.0f;
 
-    private string mName;
-
     private List<int> mPlayers; // Photo Player IDs
 
     [SerializeField]
@@ -36,9 +34,6 @@ public class GuardCamera : Photon.PunBehaviour {
         mSpotlight = GetComponent<Light>();
         mCamera = GetComponent<Camera>();
         mListener = GetComponent<AudioListener>();
-
-        // Get the name of this camera.
-        mName = this.name;
 
         // Everything off by default
         mSpotlight.enabled = false;

@@ -166,11 +166,11 @@ public class GuardController : Photon.PunBehaviour {
             {
                 if (hit.transform.gameObject.tag == "NPC")
                 {
-                    ScorePanelController.GuardCaughtNPC();
+                    MissionTracker.Singleton.CaughtIncorrect();
                 }
                 else if (hit.transform.gameObject.tag == "Spy")
                 {
-                    ScorePanelController.CaughtSpy(hit.transform.gameObject.GetPhotonView().viewID);
+                    MissionTracker.Singleton.CaughtAgent(hit.transform.gameObject.GetPhotonView().viewID);
                 }
             }
         }

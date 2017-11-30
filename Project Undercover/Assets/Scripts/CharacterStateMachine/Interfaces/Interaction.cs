@@ -47,6 +47,6 @@ public class Interaction : ScriptableObject
     //--------------------------------- Result functions ---------------------------------
     void SpyMissionComplete(StateController controller)
     {
-        ScorePanelController.CompleteMission();
+        MissionTracker.Singleton.CompleteMission(this.name);
     }
 }

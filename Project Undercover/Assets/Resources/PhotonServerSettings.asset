@@ -75,4 +75,6 @@ MonoBehaviour:
   - GuardCaughtNPCRPC
   - ReplaceNPCWithSpyRPC
   - ReplaceSpyRPC
+  - CaughtAgentRPC
+  - CaughtIncorrectRPC
   DisableAutoOpenWizard: 1

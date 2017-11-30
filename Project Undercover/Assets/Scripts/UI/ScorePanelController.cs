@@ -6,49 +6,49 @@ using UnityEngine.UI;
 
 public class ScorePanelController : Photon.PunBehaviour {
 
-    public Text _timerText;
-    public Image _guardScore, _spyScore;
+    public Text timerText;
+    public Image guardScore, spyScore;
 
-    private int _numOfMissions = 5, _maxGuardPoints = 5;
-    private int _missionsComplete = 0, _numGuardPoints = 0;
-    private float waitBetweenMissions = 5.0f;
-    private bool onMissionCooldown = false;
+    private float initalScoreWidth;
+    private static ScorePanelController mSingleton;
 
-    private float _initalScoreWidth;
-    private static ScorePanelController ActivePanel;
+    public static ScorePanelController Singleton { get { return mSingleton; } }
 
-    void Start () {
-        if (!ActivePanel)
-            ActivePanel = this;
-        else
+    /**
+     * Setup the ScorePanelController.
+     */
+    void Start()
+    {
+        // set the singleton
+        if (mSingleton)
+        {
             Debug.LogError("Two ScorePanelControllers in the scene");
+        }
+        mSingleton = this;
+
+        // start the timer update coroutine
         StartCoroutine(TimerUpdate());
 
-        // Initialize scorebar variables
-        _initalScoreWidth = _spyScore.rectTransform.sizeDelta.x;
-        _spyScore.rectTransform.sizeDelta = new Vector2(-1, _spyScore.rectTransform.sizeDelta.y);
-        _guardScore.rectTransform.sizeDelta = new Vector2(-1, _guardScore.rectTransform.sizeDelta.y);
+        // initialize scorebar variables
+        initalScoreWidth = spyScore.rectTransform.sizeDelta.x;
+        spyScore.rectTransform.sizeDelta = new Vector2(-1, spyScore.rectTransform.sizeDelta.y);
+        guardScore.rectTransform.sizeDelta = new Vector2(-1, guardScore.rectTransform.sizeDelta.y);
     }
 
-    public static void CompleteMission()
+    /**
+     * Update the score panel to reflect a new guard score
+     */
+    public void UpdateGuardScore(float progress)
     {
-        if (ActivePanel.onMissionCooldown)
-            return;
-        ActivePanel.photonView.RPC("CompleteMissionRPC", PhotonTargets.All);
+        StartCoroutine(IncreaseScoreBarAnimation(guardScore, progress));
     }
 
-    public static void CaughtSpy(int spyId)
+    /**
+     * Update the score panel to reflect a new spy score
+     */
+    public void UpdateSpyScore(float progress)
     {
-        if (ActivePanel.onMissionCooldown)
-            return;
-        ActivePanel.photonView.RPC("CaughtSpyRPC", PhotonTargets.All, spyId);
-    }
-
-    public static void GuardCaughtNPC()
-    {
-        if (ActivePanel.onMissionCooldown)
-            return;
-        ActivePanel.photonView.RPC("GuardCaughtNPCRPC", PhotonTargets.All);
+        StartCoroutine(IncreaseScoreBarAnimation(spyScore, progress));
     }
 
     #region Coroutines
@@ -65,7 +65,7 @@ public class ScorePanelController : Photon.PunBehaviour {
                 timeString = minutes.ToString() + ":0" + seconds.ToString();
             else
                 timeString = minutes.ToString() + ":" + seconds.ToString();
-            _timerText.text = timeString;
+            timerText.text = timeString;
         }
     }
 
@@ -73,7 +73,7 @@ public class ScorePanelController : Photon.PunBehaviour {
     {
         Color originalColor = scoreBar.color;
         var flashCoroutine = StartCoroutine(FlashScoreBar(scoreBar));
-        float targetWidth = _initalScoreWidth * progress;
+        float targetWidth = initalScoreWidth * progress;
         float overshotWidth = targetWidth * 1.2f;
         while (true)
         {
@@ -92,10 +92,18 @@ public class ScorePanelController : Photon.PunBehaviour {
         }
         StopCoroutine(flashCoroutine);
         StartCoroutine(ResetScoreBarColor(scoreBar, originalColor));
-        if (_numGuardPoints >= _maxGuardPoints)
-            photonView.RPC("ShowWinScreen", PhotonTargets.All, true);
-        else if (_missionsComplete >= _numOfMissions)
-            photonView.RPC("ShowWinScreen", PhotonTargets.All, false);
+
+        if (progress >= 1.0)
+        {
+            if (scoreBar == guardScore)
+            {
+                photonView.RPC("ShowWinScreen", PhotonTargets.All, true);
+            }
+            else
+            {
+                photonView.RPC("ShowWinScreen", PhotonTargets.All, false);
+            }
+        }
 
         yield return null;
     }
@@ -151,48 +159,9 @@ public class ScorePanelController : Photon.PunBehaviour {
         }
         yield return null;
     }
-
-    IEnumerator MissionCooldown()
-    {
-        onMissionCooldown = true;
-        yield return new WaitForSeconds(waitBetweenMissions);
-        onMissionCooldown = false;
-    }
     #endregion
 
     #region PunRPC
-    [PunRPC]
-    void CompleteMissionRPC()
-    {
-        Debug.Log("Mission Completed!");
-        _missionsComplete++;
-        StartCoroutine(MissionCooldown());
-        StartCoroutine(IncreaseScoreBarAnimation(_spyScore, (float)_missionsComplete / _numOfMissions));
-    }
-
-    [PunRPC]
-    void CaughtSpyRPC(int spyId)
-    {
-        Debug.Log("Spy Caught!");
-        _numGuardPoints++;
-        StartCoroutine(MissionCooldown());
-        StartCoroutine(IncreaseScoreBarAnimation(_guardScore, (float)_numGuardPoints / _maxGuardPoints));
-
-        // Get Random NPC
-        var npcs = GameManager.ActiveManager.GetNpcs();
-        int randInt = (int)(UnityEngine.Random.value * npcs.Count);
-        GameManager.ActiveManager.photonView.RPC("ReplaceNPCWithSpyRPC", PhotonTargets.All, spyId, npcs[randInt].photonView.viewID);
-    }
-
-    [PunRPC]
-    void GuardCaughtNPCRPC()
-    {
-        Debug.Log("Guard caught an NPC! Giving points to spies!");
-        _missionsComplete++;
-        StartCoroutine(MissionCooldown());
-        StartCoroutine(IncreaseScoreBarAnimation(_spyScore, (float)_missionsComplete / _numOfMissions));
-    }
-
     [PunRPC]
     void ShowWinScreen(bool guardsOrSpies)
     {

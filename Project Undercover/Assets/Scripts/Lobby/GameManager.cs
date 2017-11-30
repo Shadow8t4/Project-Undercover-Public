@@ -8,7 +8,11 @@ public class GameManager : Photon.PunBehaviour {
 
     public GameObject guardController;
     public GameObject spyPrefab, NPCPrefab, cameraRigPrefab;
+
+    public GameObject missionPanel;
+
     public int numNpcs = 9;
+
     private static GameManager _activeManager = null;
 
     public override void OnLeftRoom()
@@ -52,7 +56,7 @@ public class GameManager : Photon.PunBehaviour {
         if (PersistantPlayerSettings.character == PersistantPlayerSettings.Character.Guard)
         {
             guardController.SetActive(true);
-            //guardPanel.SetActive(true);
+            MissionTracker.IsGuard = true;
         }
         else
         {
@@ -61,7 +65,8 @@ public class GameManager : Photon.PunBehaviour {
 
             GameObject cameraRig = Instantiate(cameraRigPrefab, Vector3.zero, Quaternion.identity);
             cameraRig.GetComponentInChildren<ThirdPersonCameraController>().SetTarget(spy.transform);
-            //spyPanel.SetActive(true);
+
+            missionPanel.SetActive(true);
         }
         
         if (PhotonNetwork.isMasterClient)
