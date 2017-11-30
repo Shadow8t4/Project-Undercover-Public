@@ -112,6 +112,7 @@ public class WinAnimationController : MonoBehaviour {
 
         // Reveal Win Text
         yield return StartCoroutine(RevealWinText(1));
+        StartCoroutine(LeaveRoom());
         yield return null;
     }
 
@@ -177,5 +178,11 @@ public class WinAnimationController : MonoBehaviour {
         }
         _winText.color = new Color(1, 1, 1, limit);
         yield return null;
+    }
+
+    IEnumerator LeaveRoom()
+    {
+        yield return new WaitForSeconds(7.0f);
+        GameManager.ActiveManager.LeaveRoom();
     }
 }
