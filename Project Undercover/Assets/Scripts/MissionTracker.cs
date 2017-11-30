@@ -246,6 +246,9 @@ public class MissionTracker : Photon.PunBehaviour
     [PunRPC]
     void CompleteMissionRPC(string interactionName)
     {
+        if (mCompletedMissions + mGuardIncorrectGuesses >= mMissionLog.Count)
+            return;
+
         Mission m = mMissionLog[interactionName];
         m.Completed = true;
         mCompletedMissions++;
@@ -260,6 +263,9 @@ public class MissionTracker : Photon.PunBehaviour
     [PunRPC]
     void CaughtAgentRPC(int spyId)
     {
+        if (mGuardPoints >= mMissionLog.Count)
+            return;
+
         mGuardPoints++;
         ScorePanelController.Singleton.UpdateGuardScore((float) mGuardPoints / MAX_GUARD_POINTS);
 
@@ -273,6 +279,9 @@ public class MissionTracker : Photon.PunBehaviour
     [PunRPC]
     void CaughtIncorrectRPC()
     {
+        if (mCompletedMissions + mGuardIncorrectGuesses >= MAX_GUARD_POINTS)
+            return;
+
         mGuardIncorrectGuesses++;
         float score = mCompletedMissions + mGuardIncorrectGuesses;
         ScorePanelController.Singleton.UpdateSpyScore(score / mMissionLog.Count);
