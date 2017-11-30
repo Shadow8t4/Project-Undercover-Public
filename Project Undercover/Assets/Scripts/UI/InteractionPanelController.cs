@@ -5,34 +5,22 @@ using UnityEngine.UI;
 
 public class InteractionPanelController : MonoBehaviour {
 
+    // One choice vars
     [SerializeField]
-    private Text interactionText;
+    GameObject oneChoicePanel;
     [SerializeField]
-    private GameObject mainPanel;
+    InteractionButtonProperties interactionButton;
+
+    // two choices vars
     [SerializeField]
-    private Dropdown interactionsDropdown;
+    GameObject choicePanel;
     [SerializeField]
-    private GameObject interactionItemPrefab;
+    InteractionButtonProperties spyButton;
     [SerializeField]
-    private GameObject requestPanel;
-    [SerializeField]
-    private Text requestedInteractionText;
+    InteractionButtonProperties npcButton;
+
     private static InteractionPanelController activePanel;
     private StateController _controller;
-
-    public class InteractionData : Dropdown.OptionData
-    {
-        public Interaction interaction;
-        public bool isSpyInteraction;
-        public InteractionData(Interaction interaction, bool isSpyInteraction)
-        {
-            this.interaction = interaction;
-            this.isSpyInteraction = isSpyInteraction;
-            text = interaction.interactionDescription;
-            if (isSpyInteraction)
-                text = text + " (Spy)";
-        }
-    }
 
     void Start()
     {
@@ -43,48 +31,40 @@ public class InteractionPanelController : MonoBehaviour {
     public void SelectInteractionReveal(StateController controller)
     {
         _controller = controller;
-        if (mainPanel.activeInHierarchy)
+        if (oneChoicePanel.activeInHierarchy || choicePanel.activeInHierarchy)
             return;
-        interactionsDropdown.ClearOptions();
 
-        var optionsList = new List<Dropdown.OptionData>();
-        foreach (Interaction interaction in controller.SelectedObject.interactions)
+        int randomInt = (int)(Random.value * controller.SelectedObject.interactions.Length);
+        Interaction randomNpcInteraction = controller.SelectedObject.interactions[randomInt];
+
+        if (controller.SelectedObject.spyInteractions.Length == 0)
         {
-            var data = new InteractionData(interaction, false);
-            optionsList.Add(data);
+            oneChoicePanel.SetActive(true);
+            interactionButton.SetInteraction(randomNpcInteraction);
         }
-        foreach (Interaction interaction in controller.SelectedObject.spyInteractions)
+        else
         {
-            var data = new InteractionData(interaction, true);
-            optionsList.Add(data);
+            choicePanel.SetActive(true);
+            Interaction spyInteraction = controller.SelectedObject.spyInteractions[0];
+            spyButton.SetInteraction(spyInteraction);
+            npcButton.SetInteraction(randomNpcInteraction);
         }
-
-
-        interactionsDropdown.AddOptions(optionsList);
-        if (interactionsDropdown.value > interactionsDropdown.options.Count)
-            interactionsDropdown.value = 0;
-        _controller.SelectedInteraction = ((InteractionData)(interactionsDropdown.options[interactionsDropdown.value])).interaction;
-        ActivePanel.mainPanel.SetActive(true);
-    }
-
-    public void SetSelectedInteraction()
-    {
-        _controller.SelectedInteraction = ((InteractionData)(interactionsDropdown.options[interactionsDropdown.value])).interaction;
     }
 
     public void AcceptInteractionReveal(StateController controller)
     {
         _controller = controller;
-        requestPanel.SetActive(true);
+        oneChoicePanel.SetActive(true);
+        choicePanel.SetActive(false);
         string description = controller.Interactor.SelectedInteraction.receiverDescription;
-        requestedInteractionText.GetComponent<Text>().text = "Press 'E' to " + description;
+        interactionButton.text.text = description;
+        interactionButton.SetInteraction(controller.Interactor.SelectedInteraction);
     }
 
     public void Hide()
     {
-        mainPanel.SetActive(false);
-        requestPanel.SetActive(false);
-        interactionsDropdown.Hide();
+        choicePanel.SetActive(false);
+        oneChoicePanel.SetActive(false);
     }
 
     public static InteractionPanelController ActivePanel
@@ -109,6 +89,27 @@ public class InteractionPanelController : MonoBehaviour {
 
     public static bool InteractionPrompted()
     {
-        return ActivePanel.mainPanel.activeInHierarchy;
+        return ActivePanel.choicePanel.activeInHierarchy || ActivePanel.oneChoicePanel.activeInHierarchy;
     }
+
+    public void SetInteraction(Interaction interaction)
+    {
+        _controller.SelectedInteraction = interaction;
+    }
+
+    /*
+    public bool WasInteractionInitiated()
+    {
+        if (_initiatedInteraction)
+        {
+            _initiatedInteraction = false;
+            return _initiatedInteraction;
+        }
+        return false;
+    }
+
+    public void InitiatedInteraction()
+    {
+        _initiatedInteraction = true;
+    }*/
 }

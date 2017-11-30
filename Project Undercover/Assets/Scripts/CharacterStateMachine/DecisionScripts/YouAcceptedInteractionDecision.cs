@@ -9,9 +9,7 @@ public class YouAcceptedInteractionDecision : Decision
 {
     public override bool Decide(StateController controller)
     {
-        if (Input.GetKeyDown(KeyCode.E))
-            return controller.Interactor != null;
-        return false;
+        return controller.SelectedInteraction != null && controller.Interactor != null;
     }
 }
 
