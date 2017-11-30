@@ -29,7 +29,7 @@ public class MissionTracker : Photon.PunBehaviour
 
     const float GUARD_NOTIFICATION_DELAY = 5.0f;
     const float GUARD_NOTIFICATION_TIME = 10.0f;
-    const float MISSION_NOTIFICATION_TIME = 20.0f;
+    const float MISSION_NOTIFICATION_TIME = 10.0f;
 
     private static MissionTracker mSingleton;
 
@@ -131,8 +131,20 @@ public class MissionTracker : Photon.PunBehaviour
             "Enemy forces have planted listening devices somewhere on the premises!"
         );*/
 
-        mMissionLog["HideMessage"] = new Mission(
+        mMissionLog["HideMessageInBookshelf"] = new Mission(
             "Plant critical intelligence in the designated book.",
+            "One of the staff saw someone suspicious over by the bookcases. " +
+            "The enemy moves among us."
+        );
+
+        mMissionLog["BugBust"] = new Mission(
+            "Plant a bug on the bust.",
+            "One of the staff saw someone suspicious over by the bookcases. " +
+            "The enemy moves among us."
+        );
+
+        mMissionLog["CheckPlant"] = new Mission(
+            "Check for secrets hidden in the plant.",
             "One of the staff saw someone suspicious over by the bookcases. " +
             "The enemy moves among us."
         );

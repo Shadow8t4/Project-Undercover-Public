@@ -835,8 +835,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 01a3cf8545fc70f4c90095f144ac9b01, type: 2}
   - {fileID: 11400000, guid: 7fc2c5ab600b7b64c832a95abea9589f, type: 2}
   - {fileID: 11400000, guid: 80ca1bec2c07531428cf5a84624e44a4, type: 2}
-  spyInteractions:
-  - {fileID: 11400000, guid: 218e2ddac8223e349a855bdae23819ab, type: 2}
+  spyInteractions: []
   currentState: {fileID: 11400000, guid: 78ec31c429ad5074bb50d001b1a49a77, type: 2}
   navMeshAgent: {fileID: 0}
   animator: {fileID: 0}

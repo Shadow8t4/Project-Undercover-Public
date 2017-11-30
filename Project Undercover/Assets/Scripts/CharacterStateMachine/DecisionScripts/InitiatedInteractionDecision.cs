@@ -5,7 +5,7 @@ public class InitiatedInteractionDecision : Decision
 {
     public override bool Decide(StateController controller)
     {
-        return Input.GetKeyDown(KeyCode.E) &&
+        return controller.SelectedInteraction != null &&
             InteractionPanelController.InteractionPrompted() &&
             controller.SelectedObject != null &&
             controller.SelectedInteraction != null;
