@@ -139,7 +139,7 @@ public class MissionTracker : Photon.PunBehaviour
             "Could this be a strategy of our enemies?"
         );
 
-        mMissionLog["pass_secret"] = new Mission(
+        mMissionLog["TellSecret"] = new Mission(
             "pass_secret",
             "Trade intelligence with another spy at the party.",
             "One of our staff members spotted two individuals exchanging a secret. " +
