@@ -61,7 +61,7 @@ public class LobbyManager : Photon.PunBehaviour {
 
     public override void OnLeftRoom()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void LeaveRoom()
