@@ -42,6 +42,10 @@ public class MissionTracker : Photon.PunBehaviour
     private int mGuardPoints;
     private int mGuardIncorrectGuesses;
 
+    public AudioSource audioSource;
+    public AudioClip missionCompleteClip;
+    public AudioClip caughtSpy;
+
     private class Mission
     {
         private string mAlertText;      // text shown to overseers after mission completes
@@ -248,6 +252,8 @@ public class MissionTracker : Photon.PunBehaviour
     {
         if (mCompletedMissions + mGuardIncorrectGuesses >= mMissionLog.Count)
             return;
+        audioSource.clip = missionCompleteClip;
+        audioSource.Play();
 
         Mission m = mMissionLog[interactionName];
         m.Completed = true;
@@ -265,6 +271,8 @@ public class MissionTracker : Photon.PunBehaviour
     {
         if (mGuardPoints >= mMissionLog.Count)
             return;
+        audioSource.clip = caughtSpy;
+        audioSource.Play();
 
         mGuardPoints++;
         ScorePanelController.Singleton.UpdateGuardScore((float) mGuardPoints / MAX_GUARD_POINTS);
