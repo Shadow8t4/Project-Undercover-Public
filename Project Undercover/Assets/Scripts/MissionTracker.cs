@@ -78,7 +78,7 @@ public class MissionTracker : Photon.PunBehaviour
         // if the interactionName is invalid, cry I guess
         if (!mMissionLog.ContainsKey(interactionName))
         {
-            Debug.Log("Invalid interactionName passed to MissionTracker: " + interactionName);
+            Debug.LogError("Invalid interactionName passed to MissionTracker: " + interactionName);
             return;
         }
 
@@ -156,8 +156,6 @@ public class MissionTracker : Photon.PunBehaviour
 
         UpdateMissionLog();
         StartCoroutine(DisplayNotification("Be on the lookout for enemy agents..."));
-
-        CompleteMission("statue_swap");
     }
 
     /**
