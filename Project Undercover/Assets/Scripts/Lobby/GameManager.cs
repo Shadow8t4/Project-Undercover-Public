@@ -8,12 +8,12 @@ public class GameManager : Photon.PunBehaviour {
 
     public GameObject guardController;
     public GameObject spyPrefab, NPCPrefab, cameraRigPrefab;
-
     public GameObject missionPanel;
-
     public int numNpcs = 9;
+    public State spyIdle;
 
     private static GameManager _activeManager = null;
+
 
     public override void OnLeftRoom()
     {
@@ -94,19 +94,27 @@ public class GameManager : Photon.PunBehaviour {
     void ReplaceNPCWithSpyRPC(int spyId, int npcId)
     {
         var randNPC = PhotonView.Find(npcId);
+        var newSpy = randNPC.gameObject;
+        var controller = newSpy.GetComponent<StateController>();
 
         // Replace NPC with Spy
         PhotonView spyView = PhotonView.Find(spyId);
         if (spyView && spyView.isMine)
         {
-            PhotonNetwork.Destroy(spyView.gameObject);
-            var spy = PhotonNetwork.Instantiate(spyPrefab.name, randNPC.transform.position, randNPC.transform.rotation, 0);
+            controller.photonView.TransferOwnership(spyView.owner);
             GameObject cameraRig = GameObject.FindGameObjectWithTag("CameraRig");
-            cameraRig.GetComponentInChildren<ThirdPersonCameraController>().SetTarget(spy.transform);
+            cameraRig.GetComponentInChildren<ThirdPersonCameraController>().SetTarget(newSpy.transform);
+
+            PhotonNetwork.Destroy(spyView.gameObject);
         }
-        if (PhotonNetwork.isMasterClient)
-        {
-            PhotonNetwork.Destroy(randNPC.gameObject);
-        }
+        controller.name = "NewSpy";
+        controller.tag = "Spy";
+        controller.TransitionToState(spyIdle);
+    }
+
+    [PunRPC]
+    void TransferNPCToPlayer(int npcId, int player)
+    {
+
     }
 }
