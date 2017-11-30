@@ -46,7 +46,6 @@ public class MissionTracker : Photon.PunBehaviour
     {
         private string mAlertText;      // text shown to overseers after mission completes
         private string mDescription;    // description of the mission for agents
-        private string mName;           // name of the mission, for dev identification
 
         public string AlertText { get { return mAlertText; } }
 
@@ -54,13 +53,10 @@ public class MissionTracker : Photon.PunBehaviour
 
         public string Description { get { return mDescription; } }
 
-        public string Name { get { return mName; } }
-
-        public Mission(string name, string description, string alertText)
+        public Mission(string description, string alertText)
         {
             mAlertText = alertText;
             mDescription = description;
-            mName = name;
             Completed = false;
         }
     }
@@ -130,35 +126,30 @@ public class MissionTracker : Photon.PunBehaviour
         mGuardIncorrectGuesses = 0;
 
         /*mMissionLog["statue_swap"] = new Mission(
-            "statue_swap",
             "Replace the marked statue with a bugged replica.",
             "We're picking up some electromagnetic interference. " +
             "Enemy forces have planted listening devices somewhere on the premises!"
         );*/
 
         mMissionLog["HideMessage"] = new Mission(
-            "book_message",
             "Plant critical intelligence in the designated book.",
             "One of the staff saw someone suspicious over by the bookcases. " +
             "The enemy moves among us."
         );
 
         /*mMissionLog["bathroom_kill"] = new Mission(
-            "bathroom_kill",
             "Assassinate Knight-Captain Brystol in the bathroom.",
             "Our men found Knight-Captain Brystol dead in the bathroom. " +
             "The enemy must be stopped!"
         );*/
 
         /*mMissionLog["npc_dance"] = new Mission(
-            "npc_dance",
             "Dance with Duchess Castra to distract her momentarily.",
             "The peace talks progress poorly. Duchess Castra keeps getting distracted on the dance floor. " +
             "Could this be a strategy of our enemies?"
         );*/
 
         mMissionLog["TellSecret"] = new Mission(
-            "pass_secret",
             "Trade intelligence with another spy at the party.",
             "One of our staff members spotted two individuals exchanging a secret. " +
             "Enemy infiltrators abound."

@@ -67,6 +67,7 @@ public class GameManager : Photon.PunBehaviour {
             cameraRig.GetComponentInChildren<ThirdPersonCameraController>().SetTarget(spy.transform);
 
             missionPanel.SetActive(true);
+            MissionTracker.IsGuard = false;
         }
         
         if (PhotonNetwork.isMasterClient)
