@@ -42,6 +42,9 @@ public class GuardController : Photon.PunBehaviour {
         {
             guardCamera.DisablePreviewMode();
         }
+
+        // Prevent the pause menu from appearing.
+        InGameMenuController.MenuBlocked = true;
     }
 
     /**
@@ -65,6 +68,9 @@ public class GuardController : Photon.PunBehaviour {
         {
             mCameras[i].EnablePreviewMode(size, i % z, i / z);
         }
+
+        // Allow the pause menu to appear.
+        InGameMenuController.MenuBlocked = false;
     }
 
     /**

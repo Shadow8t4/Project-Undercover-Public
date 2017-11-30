@@ -4,18 +4,32 @@ using UnityEngine;
 
 public class InGameMenuController : MonoBehaviour {
 
+    public static bool MenuBlocked { get; set; }
+
 	public GameObject inGameMenu;
 
-	void Update () {
-		if (Input.GetKeyDown (KeyCode.Escape ))
-			EscapePressed();
+    private void Start() {
+        MenuBlocked = false;
+    }
+
+    void Update() {
+        if (MenuBlocked) {
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            EscapePressed();
+        }
 	}
 
 	void EscapePressed() {
-		inGameMenu.SetActive (true);
+        if (inGameMenu.GetActive()) {
+            Resume();
+        } else {
+		    inGameMenu.SetActive(true);
+        }
 	}
 
 	public void Resume() {
-		inGameMenu.SetActive (false);
+		inGameMenu.SetActive(false);
 	}
 }
